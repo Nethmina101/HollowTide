@@ -1,0 +1,16 @@
+{
+  "name": "the-hollow-tide",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser-first real-time multiplayer pirate horror social deduction prototype",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1",
+    "three": "^0.161.0"
+  }
+}

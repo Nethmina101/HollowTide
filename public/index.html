@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>THE HOLLOW TIDE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--oak:#5b3d2e;--parchment:#c7ae86;--brass:#9b7a45;--blood:#632f32;--tar:#211d1a;--sea:#76938b;--ink:#201813;--panel:#30251f;--line:#806345}
+*{box-sizing:border-box}body{margin:0;background:#171411;color:#e2d0ad;font-family:'IM Fell English',serif;min-height:100vh;background-image:radial-gradient(ellipse at top,#3b2a20 0,#171411 62%);overflow-x:hidden}
+button,input{font:inherit}button{cursor:pointer;color:#ead7b1;background:linear-gradient(#6a4a32,#39281e);border:1px solid #a18455;border-radius:3px;padding:10px 14px;box-shadow:inset 0 0 0 1px #241a14;transition:filter .15s,transform .15s}button:hover{filter:brightness(1.18)}button:active{transform:translateY(1px)}button:disabled{opacity:.4;cursor:not-allowed}
+h1,h2,h3,.label,.brand{font-family:Cinzel,serif;letter-spacing:.08em;text-transform:uppercase}h1{font-size:clamp(2rem,6vw,4.5rem);line-height:1.03;margin:0;color:#d7bd8e;text-shadow:0 3px 0 #34231a,0 0 25px #b08b4b40}h2{font-size:1.1rem;margin:0 0 10px;color:#d5b77d}p{line-height:1.5}.muted{color:#a99372}.tiny{font-size:.8rem;color:#a99372}.screen{max-width:1120px;margin:auto;padding:24px}.masthead{text-align:center;padding:34px 0 20px}.masthead .subtitle{letter-spacing:.2em;text-transform:uppercase;font-size:.8rem;color:#9c8355;margin-top:12px}.seal{display:inline-block;border:1px solid #8c6c43;padding:7px 12px;color:#a98b5d;font-family:Cinzel,serif;font-size:.65rem;letter-spacing:.16em;margin-bottom:15px}
+.panel{background:linear-gradient(135deg,#352820f2,#211b17f2);border:1px solid #755739;box-shadow:0 12px 35px #0008,inset 0 0 0 3px #211913;border-radius:4px;padding:18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stack{display:flex;flex-direction:column;gap:12px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}input,select{width:100%;padding:11px;background:#191511;border:1px solid #6f5436;color:#ead7b1;border-radius:2px;outline:none}label{display:block;font-family:Cinzel,serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b99a70;margin-bottom:6px}.field{margin-bottom:12px}.full{width:100%}.hidden{display:none!important}.rule{height:1px;background:linear-gradient(90deg,transparent,#806345,transparent);margin:14px 0}
+#gameLayout{display:grid;grid-template-columns:minmax(0,1fr) 275px;gap:12px;align-items:start}.gameframe{border:1px solid #806345;background:#17130f;box-shadow:0 10px 30px #0008;position:relative}.gamebar{padding:10px 12px;background:#2b211a;border-bottom:1px solid #6c4e30;display:flex;justify-content:space-between;gap:10px;align-items:center}.gamebar strong{font-family:Cinzel,serif;font-size:.8rem;letter-spacing:.1em}.canvaswrap{position:relative;width:100%;aspect-ratio:1200/760;max-height:68vh;background:#241a14;overflow:hidden}canvas{display:block;width:100%;height:100%;touch-action:none}.side{display:flex;flex-direction:column;gap:12px}.playerlist{display:flex;flex-direction:column;gap:6px}.player{display:flex;gap:8px;align-items:center;padding:7px 8px;background:#211a15;border:1px solid #4d3928;font-size:.9rem}.dot{width:12px;height:12px;border-radius:50%;border:1px solid #e0cba5;flex:none}.pill{font-family:Cinzel,serif;font-size:.63rem;padding:3px 6px;border:1px solid #806345;color:#c7ae86;letter-spacing:.07em}.pill.red{color:#e3a09a;border-color:#874b46}.pill.green{color:#a8c1a5;border-color:#53735b}.notice{padding:9px 10px;border-left:3px solid #9b7a45;background:#211a15;color:#d8c39f;font-size:.92rem;min-height:40px}.taskrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #4b3726;font-size:.86rem}.taskrow button{padding:5px 8px;font-size:.78rem}.actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}.actions button{padding:8px 6px;font-size:.8rem}.meetingbox{display:flex;flex-direction:column;gap:8px}.voteitem{display:flex;justify-content:space-between;align-items:center;gap:6px}.voteitem button{padding:5px 8px}.role-reveal{font-family:Cinzel,serif;font-size:1.05rem;letter-spacing:.12em}.mobilepad{display:none;gap:6px;grid-template-columns:repeat(3,44px);justify-content:center;margin-top:10px}.mobilepad button{padding:10px 0}.mobileactions{display:none;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.footer{text-align:center;color:#725a40;font-size:.75rem;padding:24px 0}.statusline{display:flex;justify-content:space-between;gap:8px;font-size:.8rem;color:#b9a078}.danger{color:#d78e83}.good{color:#9fb59a}
+@media(max-width:850px){.screen{padding:12px}.masthead{padding:18px 0}.grid{grid-template-columns:1fr}#gameLayout{grid-template-columns:1fr}.canvaswrap{max-height:none}.side{display:grid;grid-template-columns:1fr 1fr}.side .wide{grid-column:1/-1}.mobilepad,.mobileactions{display:grid}.gamebar{flex-wrap:wrap}.panel{padding:13px}}
+@media(max-width:500px){.side{grid-template-columns:1fr}.side .wide{grid-column:auto}.screen{padding:8px}.masthead h1{font-size:2.25rem}.panel{padding:11px}}
+/* Tactical, readable game HUD */
+#gameScreen{max-width:1380px;margin:auto}.gameframe{border:2px solid #b99156;border-radius:12px;overflow:hidden;background:#091318;box-shadow:0 22px 60px #000b,inset 0 0 0 2px #21140d}.gamebar{background:linear-gradient(90deg,#241a16,#402a1d);border-color:#8b6037}.canvaswrap{background:radial-gradient(circle at 50% 45%,#26434a,#07151b 72%);border-top:1px solid #b9915655}.gamehud{position:absolute;inset:0;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-start;padding:14px}.map-objective,.control-legend{background:#101a1ee6;border:1px solid #d1a86577;box-shadow:0 5px 18px #0008;border-radius:8px;padding:8px 11px;font:600 .72rem Cinzel,serif;letter-spacing:.06em;max-width:58%;color:#f2ddb2}.control-legend{color:#c8d9d2;text-align:right}.side{gap:10px}.side .panel{border-radius:9px;background:linear-gradient(145deg,#2f231eef,#171b20ef);box-shadow:0 10px 24px #0007}.player{border-radius:6px;background:#151b1f;border-color:#5f5241}.player:hover{background:#24323a}.notice{border-radius:6px;background:#121b20;color:#ebddbd;border-left-color:#e5ad55}.actions button{min-height:42px;border-radius:7px;background:linear-gradient(#765036,#32221c);font-family:Cinzel,serif;font-size:.68rem;letter-spacing:.04em}.actions button:first-child{background:linear-gradient(#50766f,#203b3a)}.actions button:nth-child(3),.actions button:nth-child(4),.actions button:nth-child(5){background:linear-gradient(#71333a,#32171c)}#roleGuide{font-size:1rem;line-height:1.45;border-left-width:4px}.taskrow{padding:10px 2px}.taskrow button{border-radius:6px;background:linear-gradient(#4b746d,#203c38)}
+#gameLayout{display:block;position:relative}#gameScreen .canvaswrap{height:min(76vh,820px);min-height:540px;max-height:none;aspect-ratio:auto}.side{position:absolute;z-index:4;right:16px;top:16px;width:min(360px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;padding:2px;transform:translateX(calc(100% + 32px));opacity:0;pointer-events:none;transition:transform .22s ease,opacity .22s ease}.menu-open .side{transform:translateX(0);opacity:1;pointer-events:auto}.menu-toggle{margin-left:auto;padding:7px 10px;font:700 .68rem Cinzel,serif;letter-spacing:.08em}.side .panel{margin-bottom:10px}@media(max-width:850px){#gameScreen .canvaswrap{height:68vh;min-height:410px}.gamehud{padding:9px}.map-objective{max-width:70%;font-size:.6rem}.control-legend{display:none}.side{right:8px;top:8px;width:calc(100% - 16px);max-height:calc(100% - 16px)}}
+</style>
+</head>
+<body>
+<div class="screen">
+  <header class="masthead">
+    <div class="seal">A cursed voyage · Est. 1723</div>
+    <h1>THE HOLLOW TIDE</h1>
+    <div class="subtitle">The Mourning Wren · Trust no shadow</div>
+  </header>
+
+  <section id="lobbyScreen" class="grid">
+    <div class="panel stack">
+      <div><h2>Board the Mourning Wren</h2><p class="muted">Gather your crew. The sea keeps its own counsel.</p></div>
+      <div class="field"><label for="playerName">Your pirate name</label><input id="playerName" maxlength="18" placeholder="e.g. Black Finch" value="Black Finch"/></div>
+      <button id="createBtn" class="full">Create a voyage</button>
+      <div class="rule"></div>
+      <div class="field"><label for="roomCode">Room code</label><input id="roomCode" maxlength="6" placeholder="Enter code" style="text-transform:uppercase"/></div>
+      <button id="joinBtn" class="full">Join a voyage</button>
+      <p class="tiny">2–8 players · Browser-first · No installation required</p>
+    </div>
+    <div class="panel stack">
+      <h2>Captain's notes</h2>
+      <p>Some of the crew have made a pact with something beneath the waves. Repair the ship, investigate strange events, and discover who serves the Hollow before the vessel is lost.</p>
+      <div class="rule"></div>
+      <div class="row"><span class="pill">CREW</span><span>Repair the ship or cast out every infiltrator.</span></div>
+      <div class="row"><span class="pill red">THE HOLLOW</span><span>Sabotage, deceive, and outnumber the living crew.</span></div>
+      <h3>How a voyage works</h3>
+      <p class="tiny">Each player receives a secret role after the captain starts. <strong>Crew:</strong> move to the glowing square for each repair and press E; complete all six repairs or vote out every Hollow. <strong>The Hollow:</strong> use Q to snuff lights, use the sabotage buttons to create critical threats, and click a nearby Crew player to eliminate them. Press Space near a body to report it, or use it away from a body to call a meeting (one-minute cooldown). During a meeting, vote or skip.</p>
+      <p class="tiny">Controls: WASD / arrow keys to move · E interact with a nearby repair · Space report / ring bell · Q snuff lights.</p>
+    </div>
+  </section>
+
+  <section id="roomScreen" class="panel hidden">
+    <div class="row" style="justify-content:space-between">
+      <div><h2>Gathering on deck</h2><p class="muted" style="margin:0">Share this code with your crew.</p></div>
+      <div style="text-align:right"><div class="tiny">VOYAGE CODE</div><div id="roomCodeDisplay" style="font:700 1.8rem Cinzel;color:#d9bf8e;letter-spacing:.2em">------</div><button id="copyCodeBtn">Copy code</button></div>
+    </div>
+    <div class="rule"></div>
+    <div class="grid">
+      <div><h2>Those aboard</h2><div id="lobbyPlayers" class="playerlist"></div></div>
+      <div class="stack"><h2>Choose your appearance</h2><select id="characterSelect"></select><p class="tiny">Appearance never reveals a pirate's secret allegiance.</p><button id="startBtn" class="full">Set sail</button><div id="lobbyMessage" class="notice">Waiting for the crew to board.</div></div>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="hidden">
+    <div class="gamebar" style="margin-bottom:10px;border:1px solid #6c4e30">
+      <strong id="gameRoomLabel">THE MOURNING WREN</strong>
+      <span id="phaseLabel" class="pill">VOYAGE</span>
+      <span id="roleLabel" class="pill">UNKNOWN</span><button id="menuToggle" class="menu-toggle" aria-expanded="false">GAME MENU</button>
+    </div>
+    <div id="gameLayout">
+      <div>
+        <div class="gameframe">
+          <div class="gamebar"><strong id="mapTitle">MAIN DECK</strong><span id="taskProgress">Repairs 0 / 6</span></div>
+          <div class="canvaswrap"><canvas id="gameCanvas" width="1200" height="760" aria-label="top-down tactical view of the Mourning Wren"></canvas><div class="gamehud"><div id="mapObjective" class="map-objective">BOARD THE SHIP — AWAITING ORDERS</div><div class="control-legend">WASD / ARROWS · MOVE<br>E · INTERACT &nbsp; SPACE · REPORT</div></div></div>
+        </div>
+        <div class="mobilepad">
+          <span></span><button data-dir="up">▲</button><span></span>
+          <button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button>
+        </div>
+        <div class="mobileactions">
+          <button id="mobileInteract">Interact</button><button id="mobileReport">Ring bell</button><button id="mobileSabotage">Sabotage</button>
+        </div>
+      </div>
+      <aside class="side">
+        <div class="panel"><h2>Crew manifest</h2><div id="gamePlayers" class="playerlist"></div></div>
+        <div class="panel"><h2>Ship's log</h2><div id="notice" class="notice">The voyage begins.</div><div class="rule"></div><div class="statusline"><span>Voyage time</span><span id="timeLabel">00:00</span></div><div class="statusline"><span>Living crew</span><span id="livingLabel">0</span></div><div class="statusline"><span>Repairs</span><span id="repairsLabel">0/6</span></div></div>
+        <div class="panel wide"><h2>Your orders</h2><div id="roleGuide" class="notice"></div></div>
+        <div class="panel wide"><h2>Tasks & systems</h2><div id="taskList"></div><div class="rule"></div><div class="actions"><button id="reportBtn">Report / Bell</button><button id="repairSabotageBtn">Repair system</button><button id="sabotageLightsBtn">Snuff lanterns</button><button id="sabotageHelmBtn">Jam the helm</button><button id="sabotageFloodBtn">Flood the bilge</button><button id="interactBtn">Do nearby task</button></div></div>
+        <div class="panel wide"><h2>View & graphics</h2><div class="actions"><button id="cameraModeBtn">Camera: Third person</button><button id="graphicsModeBtn">Graphics: High</button></div><p class="tiny">Third person follows your pirate. Tactical view gives the full ship overview.</p></div>
+        <div id="meetingPanel" class="panel hidden wide"><h2>The bell tolls</h2><p id="meetingInfo" class="muted">Discuss what you saw.</p><div id="voteList" class="meetingbox"></div></div>
+        <div id="endPanel" class="panel hidden wide"><h2 id="endTitle">Voyage ended</h2><p id="endText"></p><div id="endRoster" class="playerlist"></div><button id="backLobbyBtn" class="full">Return to lobby</button></div>
+      </aside>
+    </div>
+  </section>
+  <div id="toast" class="notice hidden" style="margin-top:12px"></div>
+  <footer class="footer">THE HOLLOW TIDE · A prototype of cursed waters and uncertain loyalties</footer>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script type="module">
+import * as THREE from "/vendor/three.module.min.js";
+(() => {
+const socket = io();
+const $ = id => document.getElementById(id);
+const chars = ["Captain","Deckhand","Navigator","Shipwright","Surgeon","Smuggler","Occultist","Cursed One"];
+let state=null, myId=null, roomCode=localStorage.getItem("hollowTideRoom")||null, sessionId=localStorage.getItem("hollowTideSession")||null, currentName=localStorage.getItem("hollowTideName")||"Black Finch";
+let lastToast="", gameStart=Date.now(), move={x:0,y:0}, keys={}, lastMoveSent=0, lastInteract=0, lastDraw=0, shownEnd=false;
+const canvas=$("gameCanvas");
+const three=createThreeScene();
+const taskDescriptions={compass:"Recalibrate the compass",lantern:"Refill the lanterns",logbook:"Check the ship's log",cannon:"Secure the cannon",bilge:"Pump the bilge",cargo:"Inspect the relic crate"};
+const roomNames=[["Captain's Cabin",70,75,310,220],["Navigation",850,75,280,220],["Galley",420,55,310,155],["Cargo Hold",70,405,310,230],["Cannon Deck",850,405,280,230],["Engine & Bilge",420,550,310,150],["Brig",430,250,180,180],["Main Deck",610,230,230,200]];
+function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");clearTimeout(toast.timer);toast.timer=setTimeout(()=>$("toast").classList.add("hidden"),3200)}
+function name(){return ($("playerName").value||"Nameless Pirate").trim().slice(0,18)}
+function showScreen(which){$("lobbyScreen").classList.toggle("hidden",which!=="lobby");$("roomScreen").classList.toggle("hidden",which!=="room");$("gameScreen").classList.toggle("hidden",which!=="game")}
+$("createBtn").onclick=()=>{currentName=name();socket.emit("createRoom",{name:currentName,sessionId})};
+$("joinBtn").onclick=()=>{currentName=name();socket.emit("joinRoom",{code:$("roomCode").value,name:currentName,sessionId})};
+$("copyCodeBtn").onclick=async()=>{try{await navigator.clipboard.writeText(roomCode);toast("Voyage code copied.")}catch{toast("Your voyage code is "+roomCode)}};
+$("startBtn").onclick=()=>socket.emit("startGame");
+$("characterSelect").innerHTML=chars.map(c=>`<option>${c}</option>`).join("");
+$("characterSelect").onchange=()=>socket.emit("selectCharacter",$("characterSelect").value);
+$("reportBtn").onclick=()=>tryReport();$("mobileReport").onclick=()=>tryReport();
+$("repairSabotageBtn").onclick=()=>socket.emit("repairSabotage");
+$("sabotageLightsBtn").onclick=()=>socket.emit("sabotage","lights");
+$("sabotageHelmBtn").onclick=()=>socket.emit("sabotage","helm");
+$("sabotageFloodBtn").onclick=()=>socket.emit("sabotage","flood");
+$("interactBtn").onclick=()=>doTask();$("mobileInteract").onclick=()=>doTask();
+$("mobileSabotage").onclick=()=>{if(state?.me?.role==="hollow")socket.emit("sabotage","lights");else toast("Only The Hollow can sabotage.")};
+$("backLobbyBtn").onclick=()=>{localStorage.removeItem("hollowTideRoom");location.reload()};
+$("menuToggle").onclick=()=>{const open=$("gameLayout").classList.toggle("menu-open");$("menuToggle").setAttribute("aria-expanded",open);$("menuToggle").textContent=open?"CLOSE MENU":"GAME MENU"};
+$("cameraModeBtn").onclick=()=>{three.cameraMode=three.cameraMode==="third"?"tactical":"third";$("cameraModeBtn").textContent=`Camera: ${three.cameraMode==="third"?"Third person":"Tactical"}`};
+$("graphicsModeBtn").onclick=()=>{three.quality=three.quality==="high"?"performance":"high";three.renderer.setPixelRatio(three.quality==="high"?Math.min(devicePixelRatio,1.5):1);three.renderer.shadowMap.enabled=three.quality==="high";three.sun.castShadow=three.quality==="high";$("graphicsModeBtn").textContent=`Graphics: ${three.quality==="high"?"High":"Performance"}`};
+socket.on("connect",()=>{if(roomCode&&sessionId)socket.emit("rejoinRoom",{code:roomCode,sessionId,name:currentName})});
+socket.on("joined",d=>{roomCode=d.code;sessionId=d.sessionId;localStorage.setItem("hollowTideSession",sessionId);localStorage.setItem("hollowTideRoom",roomCode);localStorage.setItem("hollowTideName",currentName);$("roomCodeDisplay").textContent=roomCode;$("roomCode").value=roomCode;showScreen("room")});
+socket.on("errorMessage",s=>toast(s));
+socket.on("state",s=>{state=s;myId=s.me?.id;roomCode=s.code;$("roomCodeDisplay").textContent=s.code;renderState();syncThreeScene();if(s.phase==="playing"||s.phase==="meeting"||s.phase==="ended")showScreen("game");else showScreen("room");if(s.phase==="ended"&&!shownEnd){shownEnd=true;showEnd()}});
+function renderState(){
+ if(!state)return;
+ const isHost=state.hostId===myId;
+ $("startBtn").disabled=!isHost||state.players.length<2;
+ $("startBtn").textContent=isHost?(state.players.length<2?"Waiting for another pirate…":"Set sail"):"Waiting for the captain…";
+ $("lobbyMessage").textContent=state.message||"Waiting for the crew to board.";
+ const plist=state.players.map(p=>`<div class="player"><span class="dot" style="background:${p.color}"></span><span style="flex:1">${esc(p.name)}${p.id===myId?" (you)":""}</span>${p.isHost?'<span class="pill">CAPTAIN</span>':""}</div>`).join("");
+ $("lobbyPlayers").innerHTML=plist;
+ $("gamePlayers").innerHTML=state.players.map(p=>`<div class="player"><span class="dot" style="background:${p.color}"></span><span style="flex:1">${esc(p.name)}${p.id===myId?" (you)":""}</span>${!p.alive?'<span class="pill red">LOST</span>':!p.connected?'<span class="pill">AWAY</span>':""}</div>`).join("");
+ $("phaseLabel").textContent=state.phase.toUpperCase();
+ $("roleLabel").textContent=state.me?.role==="hollow"?"THE HOLLOW":"CREW";
+ $("roleLabel").className="pill "+(state.me?.role==="hollow"?"red":"green");
+ $("notice").textContent=state.message||"The sea is quiet.";
+ $("livingLabel").textContent=state.players.filter(p=>p.alive&&p.connected).length;
+ $("taskProgress").textContent=`Repairs ${state.completedTasks} / ${state.taskCount}`;
+ $("repairsLabel").textContent=`${state.completedTasks}/${state.taskCount}`;
+ $("taskList").innerHTML=state.tasks.map(t=>`<div class="taskrow"><span>${t.done?"✓ ":""}${esc(t.name)}</span><button ${t.done||state.me?.role!=="crew"||state.phase!=="playing"?"disabled":""} onclick="window.doTaskId('${t.id}')">${t.done?"Done":"Do"}</button></div>`).join("");
+ $("meetingPanel").classList.toggle("hidden",state.phase!=="meeting");
+ if(state.phase==="meeting"||state.phase==="ended"){$("gameLayout").classList.add("menu-open");$("menuToggle").setAttribute("aria-expanded","true");$("menuToggle").textContent="CLOSE MENU";}
+ if(state.phase==="meeting")renderVotes();
+ $("sabotageLightsBtn").disabled=state.me?.role!=="hollow"||state.phase!=="playing"||!!state.sabotage;
+ $("sabotageHelmBtn").disabled=$("sabotageLightsBtn").disabled;$("sabotageFloodBtn").disabled=$("sabotageLightsBtn").disabled;
+ $("repairSabotageBtn").disabled=!state.sabotage||state.me?.role!=="crew"||state.phase!=="playing";
+ $("interactBtn").disabled=state.me?.role!=="crew"||state.phase!=="playing";
+ $("reportBtn").disabled=state.phase!=="playing"||!state.me?.alive;
+ renderRoleGuide();
+ if(state.phase==="ended"){$("endPanel").classList.remove("hidden");}else $("endPanel").classList.add("hidden");
+}
+function renderRoleGuide(){
+ const guide=$("roleGuide");
+ if(state.phase==="meeting"){$("mapObjective").textContent="MEETING IN PROGRESS — CAST YOUR VOTE";guide.textContent="The bell has paused the voyage. Discuss, then choose a living pirate to vote for or skip the vote.";return}
+ if(state.phase==="ended"){$("mapObjective").textContent="VOYAGE COMPLETE";guide.textContent="The voyage is over. The final roster shows every player's role.";return}
+ if(state.me?.role==="hollow"){
+  $("mapObjective").textContent="THE HOLLOW — SABOTAGE, DECEIVE, ELIMINATE";guide.textContent="You are The Hollow. Blend in, press Q to snuff the lights, or use the sabotage buttons. Helm and flood are critical: Crew must repair them before their timer expires. Walk close to a Crew pirate, then click their character to eliminate them. You win when Hollow equal or outnumber living Crew.";
+ }else{
+  const remaining=state.tasks.filter(t=>!t.done), next=nearestTask();
+  $("mapObjective").textContent=next?`CREW OBJECTIVE — ${next.name.toUpperCase()} · ${next.room.toUpperCase()}`:"CREW OBJECTIVE — ALL REPAIRS COMPLETE";guide.textContent=next?`You are Crew. Finish all repairs or expose The Hollow. Next repair: ${next.name} (${next.room}). Walk to its glowing beacon and press E. ${remaining.length} repair${remaining.length===1?"":"s"} remain.`:"You are Crew. All repairs are complete—your escape should be secured.";
+ }
+}
+function renderVotes(){
+ const eligible=state.players.filter(p=>p.alive&&p.connected);
+ $("meetingInfo").textContent=`${state.meeting?.votes||0} of ${state.meeting?.eligible||eligible.length} votes cast. Living players only.`;
+ $("voteList").innerHTML=eligible.map(p=>`<div class="voteitem"><span>${esc(p.name)}${p.id===myId?" (you)":""}</span><button ${p.id===myId||!state.me?.alive?"disabled":""} onclick="window.castVote('${p.id}')">Vote</button></div>`).join("")+`<button onclick="window.castVote('skip')" ${!state.me?.alive?"disabled":""}>Skip vote</button>`;
+}
+window.castVote=id=>socket.emit("vote",id);
+function showEnd(){
+ $("endTitle").textContent=state.winner==="crew"?"The crew survives":"The Hollow claim the ship";
+ $("endText").textContent=state.message;
+ $("endRoster").innerHTML=state.players.map(p=>`<div class="player"><span class="dot" style="background:${p.color}"></span><span style="flex:1">${esc(p.name)}</span><span class="pill ${p.role==="hollow"?"red":"green"}">${(p.role||"crew").toUpperCase()}</span></div>`).join("");
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function nearestTask(){if(!state)return null;const me=state.players.find(p=>p.id===myId);if(!me)return null;return state.tasks.filter(t=>!t.done).sort((a,b)=>Math.hypot(a.x-me.x,a.y-me.y)-Math.hypot(b.x-me.x,b.y-me.y))[0]}
+function doTaskId(id){const t=state?.tasks.find(t=>t.id===id);if(!t)return;socket.emit("interact",id)}
+window.doTaskId=doTaskId;
+function doTask(){if(!state||state.phase!=="playing")return;const me=state.players.find(p=>p.id===myId);if(!me)return;if(state.me?.role!=="crew")return toast("Only Crew can repair. You are The Hollow: sabotage, deceive, or eliminate nearby Crew.");const t=nearestTask();if(!t)return toast("All repairs are complete.");if(Math.hypot(t.x-me.x,t.y-me.y)>80)return toast(`Move closer to ${t.name} in ${t.room}.`);socket.emit("interact",t.id)}
+function tryReport(){if(!state||state.phase!=="playing")return;const me=state.players.find(p=>p.id===myId);const body=state.bodies?.find(b=>Math.hypot(b.x-me.x,b.y-me.y)<90);socket.emit("report",body?.id||null)}
+window.addEventListener("keydown",e=>{const k=e.key.toLowerCase();if(["arrowup","arrowdown","arrowleft","arrowright"," "].includes(k))e.preventDefault();keys[k]=true;if(k==="e")doTask();if(k===" ")tryReport();if(k==="q"&&state?.me?.role==="hollow")socket.emit("sabotage","lights")});
+window.addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=false});
+document.querySelectorAll("[data-dir]").forEach(button => {
+  const dir = button.dataset.dir;
+
+  const set = value => {
+    move[dir] = value;
+  };
+
+  button.addEventListener("touchstart", event => {
+    event.preventDefault();
+    set(true);
+  }, { passive: false });
+
+  button.addEventListener("touchend", event => {
+    event.preventDefault();
+    set(false);
+  }, { passive: false });
+
+  button.addEventListener("mousedown", () => set(true));
+  button.addEventListener("mouseup", () => set(false));
+  button.addEventListener("mouseleave", () => set(false));
+});
+canvas.addEventListener("click", e => {
+ const me=state?.players.find(p=>p.id===myId);
+ if(!me || state.phase!=="playing" || !me.alive) return;
+ if(me.role!=="hollow"){toast("Only The Hollow can eliminate. Crew: use E at a glowing repair station.");return}
+ const rect=canvas.getBoundingClientRect();
+ const clickX=e.clientX-rect.left,clickY=e.clientY-rect.top;
+ const hollowIds=state.me?.hollowIds||[myId];
+ const candidates=state.players.filter(p=>p.id!==myId&&!hollowIds.includes(p.id)&&p.alive&&p.connected).map(p=>{const point=mapPosition(p.x,p.y);point.y=.65;point.project(three.camera);return {player:p,x:(point.x+1)*rect.width/2,y:(1-point.y)*rect.height/2,depth:point.z}}).filter(p=>p.depth>=-1&&p.depth<=1&&p.x>=0&&p.x<=rect.width&&p.y>=0&&p.y<=rect.height);
+ const target=candidates.map(p=>({...p,screenDistance:Math.hypot(p.x-clickX,p.y-clickY)})).sort((a,b)=>a.screenDistance-b.screenDistance)[0];
+ if(target&&target.screenDistance<Math.max(52,rect.width*.055))socket.emit("eliminate",target.player.id);else toast("Click directly on a living Crew pirate. Move close first; elimination only works nearby.");
+});
+function inputVector(){let x=0,y=0;if(keys.w||keys.arrowup||move.up)y--;if(keys.s||keys.arrowdown||move.down)y++;if(keys.a||keys.arrowleft||move.left)x--;if(keys.d||keys.arrowright||move.right)x++;return{x,y}}
+function updateMovement(){if(!state||state.phase!=="playing"||!state.me?.alive)return;const v=inputVector();if((v.x||v.y)&&Date.now()-lastMoveSent>48){lastMoveSent=Date.now();socket.emit("move",{dx:v.x,dy:v.y})}}
+function draw(){
+ requestAnimationFrame(draw);if(!state||$("gameScreen").classList.contains("hidden"))return;
+ const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);
+ // ocean and fog
+ ctx.fillStyle="#171b19";ctx.fillRect(0,0,w,h);
+ for(let i=0;i<18;i++){ctx.strokeStyle=i%2?"#354039":"#27332e";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,i*48+Math.sin(Date.now()/1900+i)*5);for(let x=0;x<=w;x+=60)ctx.lineTo(x,i*48+Math.sin(x/95+Date.now()/1800+i)*5);ctx.stroke()}
+ // ship hull silhouette
+ ctx.save();ctx.beginPath();ctx.moveTo(210,30);ctx.quadraticCurveTo(600,-20,990,30);ctx.lineTo(1140,160);ctx.lineTo(1080,600);ctx.quadraticCurveTo(600,790,120,600);ctx.lineTo(60,160);ctx.closePath();ctx.fillStyle="#2a1c15";ctx.fill();ctx.strokeStyle="#9b7548";ctx.lineWidth=8;ctx.stroke();
+ // deck planks
+ ctx.save();ctx.clip();for(let y=0;y<h;y+=27){ctx.fillStyle=y%54===0?"#60432f":"#563a29";ctx.fillRect(70,y,1060,26);ctx.strokeStyle="#38271d";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(70,y+26);ctx.lineTo(1130,y+26);ctx.stroke();for(let x=100+(y%54?25:0);x<1120;x+=110){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+26);ctx.stroke()}}
+ // rooms/walls
+ const roomRects=[["CAPTAIN'S CABIN",75,75,285,210],["NAVIGATION",840,75,285,210],["GALLEY",430,55,300,145],["CARGO HOLD",75,420,285,190],["CANNON DECK",840,420,285,190],["ENGINE & BILGE",430,570,300,125],["BRIG",430,260,165,175]];
+ roomRects.forEach(([n,x,y,rw,rh])=>{ctx.fillStyle="#30241b";ctx.fillRect(x,y,rw,rh);ctx.strokeStyle="#9c774b";ctx.lineWidth=7;ctx.strokeRect(x,y,rw,rh);ctx.strokeStyle="#6d5036";ctx.lineWidth=2;ctx.strokeRect(x+9,y+9,rw-18,rh-18);ctx.fillStyle="#c1a578";ctx.font="14px Cinzel,serif";ctx.textAlign="center";ctx.fillText(n,x+rw/2,y+22)});
+ // mast
+ ctx.fillStyle="#3a291d";ctx.beginPath();ctx.arc(690,350,43,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#b18b55";ctx.lineWidth=4;ctx.stroke();ctx.fillStyle="#92744c";ctx.beginPath();ctx.arc(690,350,23,0,Math.PI*2);ctx.fill();
+ // ropes
+ ctx.strokeStyle="#9a8057";ctx.lineWidth=2;[[600,200,610,270],[730,200,760,290],[600,450,610,530],[730,450,760,540]].forEach(a=>{ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(a[2],a[3]);ctx.stroke()});
+ // lantern pools
+ [[600,130],[960,170],[230,180],[980,500],[600,620],[240,500]].forEach(([x,y],i)=>{const g=ctx.createRadialGradient(x,y,2,x,y,95);g.addColorStop(0,"#d8a75b38");g.addColorStop(1,"#d8a75b00");ctx.fillStyle=g;ctx.fillRect(x-100,y-100,200,200);ctx.fillStyle="#d8a75b";ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill()});
+ ctx.restore();ctx.restore();
+ // sabotage overlays
+ if(state.sabotage){if(state.sabotage.type==="lights"){ctx.fillStyle="#0b0b0bd0";ctx.fillRect(0,0,w,h);const me=state.players.find(p=>p.id===myId);if(me){const g=ctx.createRadialGradient(me.x,me.y,30,me.x,me.y,170);g.addColorStop(0,"#00000000");g.addColorStop(1,"#080808ee");ctx.fillStyle=g;ctx.fillRect(0,0,w,h)}}else if(state.sabotage.type==="flood"){ctx.fillStyle="#405f5d55";ctx.fillRect(70,450,1060,250)}}
+ // bodies
+ (state.bodies||[]).forEach(b=>{ctx.fillStyle="#171310";ctx.beginPath();ctx.ellipse(b.x,b.y,15,8,-.4,0,Math.PI*2);ctx.fill();ctx.fillStyle="#9b443b";ctx.beginPath();ctx.arc(b.x+8,b.y-3,6,0,Math.PI*2);ctx.fill();ctx.fillStyle="#d8c39f";ctx.font="12px Cinzel";ctx.fillText("BODY",b.x,b.y-17)});
+ // tasks
+ state.tasks.forEach(t=>{ctx.save();ctx.translate(t.x,t.y);ctx.fillStyle=t.done?"#4e6653":"#c3a16a";ctx.strokeStyle=t.done?"#9eb69b":"#e0c38e";ctx.lineWidth=2;ctx.beginPath();ctx.rect(-13,-13,26,26);ctx.fill();ctx.stroke();ctx.fillStyle="#201812";ctx.font="bold 14px serif";ctx.textAlign="center";ctx.fillText(t.done?"✓":"✦",0,5);ctx.restore()});
+ // players
+ state.players.forEach(p=>{if(!p.connected&&!p.alive)return;ctx.save();ctx.translate(p.x,p.y);if(!p.alive){ctx.globalAlpha=.24;ctx.fillStyle=p.color;ctx.beginPath();ctx.ellipse(0,4,14,8,0,0,Math.PI*2);ctx.fill();ctx.restore();return}
+ // shadow
+ ctx.fillStyle="#0c0a08a0";ctx.beginPath();ctx.ellipse(1,12,16,8,0,0,Math.PI*2);ctx.fill();
+ // coat body
+ ctx.fillStyle=p.color;ctx.strokeStyle=p.id===myId?"#f2dfb2":"#2b1c14";ctx.lineWidth=p.id===myId?3:2;ctx.beginPath();ctx.moveTo(-10,-8);ctx.lineTo(10,-8);ctx.lineTo(12,9);ctx.lineTo(0,14);ctx.lineTo(-12,9);ctx.closePath();ctx.fill();ctx.stroke();
+ // head
+ ctx.fillStyle="#c7a27b";ctx.beginPath();ctx.arc(0,-12,8,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#352319";ctx.lineWidth=2;ctx.stroke();
+ // hat
+ ctx.fillStyle="#2b2119";ctx.beginPath();ctx.ellipse(0,-18,14,5,0,0,Math.PI*2);ctx.fill();ctx.fillRect(-7,-24,14,7);
+ // scarf
+ ctx.strokeStyle=p.color;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(6,-7);ctx.lineTo(14,-2);ctx.stroke();
+ ctx.fillStyle="#ead7b1";ctx.font="13px 'IM Fell English'";ctx.textAlign="center";ctx.fillText(p.name.slice(0,16),0,31);
+ if(p.id===myId){ctx.strokeStyle="#e4c58d";ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,22,0,Math.PI*2);ctx.stroke()}
+ ctx.restore()});
+ // own role is never shown over heads, keep map atmospheric
+ if(state.phase==="meeting"){ctx.fillStyle="#120e0ce8";ctx.fillRect(0,0,w,h);ctx.fillStyle="#d9bf8e";ctx.textAlign="center";ctx.font="42px Cinzel";ctx.fillText("THE BELL TOLLS",w/2,h/2-8);ctx.font="18px 'IM Fell English'";ctx.fillText("Choose whom to trust.",w/2,h/2+28)}
+ if(state.phase==="ended"){ctx.fillStyle="#120e0ced";ctx.fillRect(0,0,w,h);ctx.fillStyle="#d9bf8e";ctx.textAlign="center";ctx.font="38px Cinzel";ctx.fillText(state.winner==="crew"?"THE CREW SURVIVES":"THE HOLLOW CLAIM THE SHIP",w/2,h/2)}
+}
+function mapPosition(x,y){return new THREE.Vector3((x-600)/60,0,(y-380)/60)}
+function createThreeScene(){
+ const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.NoToneMapping;
+ const scene=new THREE.Scene();scene.background=new THREE.Color("#123f4c");scene.fog=new THREE.Fog("#123f4c",18,34);
+ const camera=new THREE.PerspectiveCamera(62,1200/760,.1,100);camera.position.set(0,10,9);camera.lookAt(0,0,0);
+ const ambient=new THREE.HemisphereLight("#e6ffff","#2b3d40",1.65);scene.add(ambient);const moon=new THREE.DirectionalLight("#fff1cc",1.8);moon.position.set(-6,16,5);moon.castShadow=true;moon.shadow.mapSize.set(1024,1024);scene.add(moon);
+ const water=new THREE.Mesh(new THREE.PlaneGeometry(60,50),new THREE.MeshStandardMaterial({color:"#28778a",roughness:.26,metalness:.35}));water.rotation.x=-Math.PI/2;water.position.y=-.7;scene.add(water);
+ const deck=new THREE.Mesh(new THREE.BoxGeometry(20,.45,12.8),new THREE.MeshStandardMaterial({color:"#bc7c4d",roughness:.75}));deck.position.y=-.35;deck.receiveShadow=true;scene.add(deck);
+ const trim=new THREE.MeshStandardMaterial({color:"#342018",roughness:.7}),wallMaterial=new THREE.MeshStandardMaterial({color:"#315961",roughness:.62,metalness:.08});
+ [[0,0,6.35,20,.35,.25],[0,0,-6.35,20,.35,.25],[9.9,0,0,.25,.35,12.8],[-9.9,0,0,.25,.35,12.8]].forEach(([x,y,z,w,h,d])=>{const rail=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),trim);rail.position.set(x,y,z);scene.add(rail)});
+ const roomRects=[["CAPTAIN'S CABIN",75,75,285,210,"#76513a"],["NAVIGATION",840,75,285,210,"#365b61"],["GALLEY",420,55,300,145,"#6e4f38"],["CARGO HOLD",75,420,285,190,"#514338"],["CANNON DECK",840,420,285,190,"#6c3934"],["ENGINE & BILGE",430,570,300,125,"#3b5b53"],["BRIG",430,260,165,175,"#4a4555"]];
+ roomRects.forEach(([name,x,y,w,h,color],index)=>{const p=mapPosition(x+w/2,y+h/2),rw=w/60,rh=h/60;const floor=new THREE.Mesh(new THREE.BoxGeometry(rw,.1,rh),new THREE.MeshStandardMaterial({color,roughness:.9}));floor.position.set(p.x,-.04,p.z);scene.add(floor);[[0,-rh/2,rw,.14],[0,rh/2,rw,.14],[-rw/2,0,.14,rh],[rw/2,0,.14,rh]].forEach(([dx,dz,bw,bd])=>{const wall=new THREE.Mesh(new THREE.BoxGeometry(bw,.8,bd),wallMaterial);wall.position.set(p.x+dx,.4,p.z+dz);wall.castShadow=true;scene.add(wall)});addRoomLabel(scene,name,p.x,p.z);if(index<6){const propMaterial=new THREE.MeshStandardMaterial({color:index%2?"#b56635":"#d9a75b",roughness:.5,metalness:.12});const prop=new THREE.Mesh(new THREE.BoxGeometry(.75,.45,.45),propMaterial);prop.position.set(p.x+(index%2?.55:-.55),.23,p.z+(index%3?.35:-.35));prop.rotation.y=index*.45;prop.castShadow=true;scene.add(prop)}});
+ const mast=new THREE.Mesh(new THREE.CylinderGeometry(.35,.43,1.7,12),trim);mast.position.set(1.5,.8,-.5);scene.add(mast);
+ return {renderer,scene,camera,ambient,sun:moon,cameraMode:"third",quality:"high",focus:new THREE.Vector3(),players:new Map(),tasks:new Map(),bodies:new Map(),lastFrame:0};
+}
+function addRoomLabel(scene,text,x,z){const label=document.createElement("canvas");label.width=512;label.height=80;const c=label.getContext("2d");c.font="700 28px Cinzel,serif";c.textAlign="center";c.fillStyle="#f5dca7";c.fillText(text,256,45);const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(label),transparent:true,opacity:.78}));sprite.position.set(x,.04,z);sprite.scale.set(2.8,.44,1);scene.add(sprite)}
+function makePirate(player){
+ const group=new THREE.Group();group.userData={playerId:player.id,targetPosition:new THREE.Vector3(),phase:Math.random()*Math.PI*2};
+ const shadow=new THREE.Mesh(new THREE.CircleGeometry(.47,20),new THREE.MeshBasicMaterial({color:"#071014",transparent:true,opacity:.45}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.01;group.add(shadow);
+ const coat=new THREE.Mesh(new THREE.CapsuleGeometry(.28,.46,6,14),new THREE.MeshStandardMaterial({color:player.color,roughness:.45,metalness:.08}));coat.position.y=.38;coat.castShadow=true;group.add(coat);
+ const arms=[];[-1,1].forEach(side=>{const arm=new THREE.Mesh(new THREE.CapsuleGeometry(.095,.28,4,8),new THREE.MeshStandardMaterial({color:player.color,roughness:.5}));arm.position.set(side*.3,.42,-.015);arm.rotation.z=side*-.22;arm.castShadow=true;group.add(arm);arms.push(arm);const hand=new THREE.Mesh(new THREE.SphereGeometry(.09,10,8),new THREE.MeshStandardMaterial({color:"#c9956e",roughness:.8}));hand.position.set(side*.34,.2,-.04);group.add(hand)});group.userData.arms=arms;
+ const collar=new THREE.Mesh(new THREE.ConeGeometry(.22,.28,4),new THREE.MeshStandardMaterial({color:"#e4d1a6",roughness:.8}));collar.position.set(0,.68,-.06);collar.rotation.x=Math.PI;group.add(collar);
+ const sash=new THREE.Mesh(new THREE.BoxGeometry(.52,.08,.46),new THREE.MeshStandardMaterial({color:"#443027",roughness:.65}));sash.position.y=.28;group.add(sash);
+ const buckle=new THREE.Mesh(new THREE.BoxGeometry(.12,.12,.05),new THREE.MeshStandardMaterial({color:"#d5a74d",metalness:.72,roughness:.3}));buckle.position.set(0,.29,-.26);group.add(buckle);
+ [.4,.51,.61].forEach(y=>{const button=new THREE.Mesh(new THREE.SphereGeometry(.035,8,6),new THREE.MeshStandardMaterial({color:"#f4cf79",metalness:.6,roughness:.3}));button.position.set(0,y,-.265);group.add(button)});
+ const backpack=new THREE.Mesh(new THREE.BoxGeometry(.34,.4,.2),new THREE.MeshStandardMaterial({color:player.color,roughness:.5}));backpack.position.set(0,.4,.26);backpack.castShadow=true;group.add(backpack);
+ const boots=[];[-.16,.16].forEach(x=>{const boot=new THREE.Mesh(new THREE.CapsuleGeometry(.1,.2,4,8),new THREE.MeshStandardMaterial({color:"#2a1b18",roughness:.7}));boot.position.set(x,.16,.03);group.add(boot);boots.push(boot)});group.userData.boots=boots;
+ const visor=new THREE.Mesh(new THREE.SphereGeometry(.2,18,12),new THREE.MeshStandardMaterial({color:"#9ee5ef",emissive:"#235a65",emissiveIntensity:.45,roughness:.18,metalness:.7}));visor.scale.set(1.3,.48,.95);visor.position.set(0,.67,-.21);group.add(visor);
+ const hat=new THREE.Mesh(new THREE.CylinderGeometry(.26,.34,.15,12),new THREE.MeshStandardMaterial({color:"#201713",roughness:.7}));hat.position.y=.91;group.add(hat);
+ if(player.character==="Captain"){const plume=new THREE.Mesh(new THREE.ConeGeometry(.08,.35,6),new THREE.MeshStandardMaterial({color:"#e5bd58",metalness:.18}));plume.position.set(.14,1.1,0);plume.rotation.z=-.4;group.add(plume);const brim=new THREE.Mesh(new THREE.BoxGeometry(.72,.055,.27),new THREE.MeshStandardMaterial({color:"#211813"}));brim.position.set(0,.9,-.02);group.add(brim)}
+ if(player.character==="Deckhand"){const bandana=new THREE.Mesh(new THREE.TorusGeometry(.2,.07,6,16),new THREE.MeshStandardMaterial({color:"#9e3936"}));bandana.position.y=.78;bandana.rotation.x=Math.PI/2;group.add(bandana)}
+ if(player.character==="Surgeon"){const band=new THREE.Mesh(new THREE.TorusGeometry(.24,.045,8,20),new THREE.MeshStandardMaterial({color:"#eee5ce"}));band.position.y=.86;band.rotation.x=Math.PI/2;group.add(band);const crossV=new THREE.Mesh(new THREE.BoxGeometry(.06,.22,.035),new THREE.MeshBasicMaterial({color:"#a4433b"}));crossV.position.set(0,.86,-.23);group.add(crossV);const crossH=new THREE.Mesh(new THREE.BoxGeometry(.18,.06,.035),new THREE.MeshBasicMaterial({color:"#a4433b"}));crossH.position.set(0,.86,-.23);group.add(crossH)}
+ if(player.character==="Navigator"){const scope=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,.28,12),new THREE.MeshStandardMaterial({color:"#b99656",metalness:.7}));scope.rotation.z=Math.PI/2;scope.position.set(.28,.65,-.12);group.add(scope)}
+ if(player.character==="Shipwright"){const goggles=new THREE.Mesh(new THREE.TorusGeometry(.21,.045,8,20),new THREE.MeshStandardMaterial({color:"#c49645",metalness:.62,roughness:.28}));goggles.position.set(0,.76,-.2);group.add(goggles);const tool=new THREE.Mesh(new THREE.BoxGeometry(.12,.48,.12),new THREE.MeshStandardMaterial({color:"#825738"}));tool.position.set(.46,.38,.04);group.add(tool)}
+ if(player.character==="Occultist"){const hood=new THREE.Mesh(new THREE.ConeGeometry(.31,.38,8),new THREE.MeshStandardMaterial({color:"#352d4c",roughness:.92}));hood.position.y=1.02;group.add(hood);const charm=new THREE.Mesh(new THREE.OctahedronGeometry(.1),new THREE.MeshStandardMaterial({color:"#8d75d0",emissive:"#42307c",emissiveIntensity:.65}));charm.position.set(0,.28,-.31);group.add(charm)}
+ if(player.character==="Cursed One"){[-.14,.14].forEach(x=>{const horn=new THREE.Mesh(new THREE.ConeGeometry(.08,.25,7),new THREE.MeshStandardMaterial({color:"#ded0b0",roughness:.65}));horn.position.set(x,1.05,0);horn.rotation.z=x<0?.25:-.25;group.add(horn)})}
+ const ring=new THREE.Mesh(new THREE.TorusGeometry(.52,.05,8,28),new THREE.MeshBasicMaterial({color:"#ffe2a1"}));ring.rotation.x=-Math.PI/2;ring.position.y=.025;ring.visible=player.id===myId;group.add(ring);
+ three.scene.add(group);return group;
+}
+function syncThreeScene(){
+ if(!state)return;
+ const visible=new Set(state.players.filter(p=>p.connected||p.alive).map(p=>p.id));
+ three.players.forEach((mesh,id)=>{if(!visible.has(id)){three.scene.remove(mesh);three.players.delete(id)}});
+ state.players.forEach(player=>{let mesh=three.players.get(player.id);if(!mesh){mesh=makePirate(player);const p=mapPosition(player.x,player.y);mesh.position.copy(p);three.players.set(player.id,mesh)}const p=mapPosition(player.x,player.y);mesh.userData.targetPosition.set(p.x,player.alive?-.1:-.3,p.z);mesh.rotation.y=-(player.direction||0);mesh.visible=player.connected||player.alive;mesh.scale.set(1.3,player.alive?1.3:.28,1.3);});
+ const taskIds=new Set(state.tasks.map(task=>task.id));three.tasks.forEach((mesh,id)=>{if(!taskIds.has(id)){three.scene.remove(mesh);three.tasks.delete(id)}});
+ state.tasks.forEach(task=>{let mesh=three.tasks.get(task.id);if(!mesh){mesh=new THREE.Mesh(new THREE.OctahedronGeometry(.42,1),new THREE.MeshStandardMaterial({color:"#ffe09a",emissive:"#c76b19",emissiveIntensity:1.1,roughness:.28,metalness:.15}));mesh.position.copy(mapPosition(task.x,task.y));mesh.position.y=.38;mesh.castShadow=true;three.scene.add(mesh);three.tasks.set(task.id,mesh)}mesh.visible=!task.done;});
+ three.ambient.intensity=state.sabotage?.type === "lights" ? .72 : 1.65;
+}
+function renderThree(time=0){
+ requestAnimationFrame(renderThree);if(document.hidden||$("gameScreen").classList.contains("hidden")||time-three.lastFrame<1000/45)return;three.lastFrame=time;const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;if(canvas.width!==Math.floor(rect.width*three.renderer.getPixelRatio())||canvas.height!==Math.floor(rect.height*three.renderer.getPixelRatio())){three.renderer.setSize(rect.width,rect.height,false);three.camera.aspect=rect.width/rect.height;three.camera.updateProjectionMatrix()}
+ three.players.forEach(mesh=>{const walking=mesh.position.distanceTo(mesh.userData.targetPosition)>.035;mesh.position.lerp(mesh.userData.targetPosition,.32);const swing=walking?Math.sin(time*.012+mesh.userData.phase)*.55:Math.sin(time*.002+mesh.userData.phase)*.035;mesh.userData.arms.forEach((arm,index)=>{arm.rotation.x=swing*(index?1:-1)});mesh.userData.boots.forEach((boot,index)=>{boot.position.z=.03+(walking?Math.sin(time*.012+mesh.userData.phase+index*Math.PI)*.12:0)})});
+ const me=state?.players.find(player=>player.id===myId);if(me){const target=mapPosition(me.x,me.y);three.focus.lerp(target,.1);if(three.cameraMode==="third"){const behind=new THREE.Vector3(0,6.6,6.3).applyAxisAngle(new THREE.Vector3(0,1,0),-(me.direction||0));const desired=three.focus.clone().add(behind);three.camera.position.lerp(desired,.12);three.camera.lookAt(three.focus.x,.58,three.focus.z)}else{const desired=three.focus.clone().add(new THREE.Vector3(0,18,.01));three.camera.position.lerp(desired,.08);three.camera.lookAt(three.focus)}}
+ three.tasks.forEach(mesh=>{mesh.rotation.y+=.012;mesh.position.y=.34+Math.sin(Date.now()/350+mesh.position.x)*.06});three.renderer.render(three.scene,three.camera);
+}
+function tick(){updateMovement();if(state?.startedAt){const s=Math.floor((Date.now()-state.startedAt)/1000);$("timeLabel").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}requestAnimationFrame(tick)}
+requestAnimationFrame(renderThree);requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+const express = require("express");
+const http = require("http");
+const path = require("path");
+const { Server } = require("socket.io");
+const {
+  CHARACTERS, MAP, SABOTAGE_TARGETS, beginMeeting, checkWin, createPlayer, createRoom,
+  distance, findRoom, finishGame, livingPlayers, resolveMeeting, setMessage, snapshot, startGame
+} = require("./src/game-state");
+
+const PORT = process.env.PORT || 3000;
+const MAX_PLAYERS = 8;
+const rooms = new Map();
+const pendingRoomUpdates = new WeakMap();
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: "*" } });
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/vendor", express.static(path.join(__dirname, "node_modules", "three", "build")));
+
+function emitRoom(room) {
+  room.players.forEach(player => {
+    if (player.connected) io.to(player.id).emit("state", snapshot(room, player.id));
+  });
+}
+
+function scheduleRoomUpdate(room) {
+  if (pendingRoomUpdates.has(room)) return;
+  const timer = setTimeout(() => {
+    pendingRoomUpdates.delete(room);
+    emitRoom(room);
+  }, 50);
+  pendingRoomUpdates.set(room, timer);
+}
+
+function getPlayerContext(socket) {
+  const room = findRoom(rooms, socket.id);
+  return { room, player: room?.players.get(socket.id) };
+}
+
+function joinRoom(socket, room, player) {
+  socket.join(room.code);
+  socket.emit("joined", { code: room.code, sessionId: player.sessionId });
+  emitRoom(room);
+}
+
+function movePlayer(player, dx, dy, elapsedSeconds) {
+  const magnitude = Math.hypot(dx, dy) || 1;
+  const normalizedX = Math.max(-1, Math.min(1, dx)) / Math.max(1, magnitude);
+  const normalizedY = Math.max(-1, Math.min(1, dy)) / Math.max(1, magnitude);
+  const step = 115 * elapsedSeconds;
+  if (Math.hypot(dx, dy)) player.direction = Math.atan2(normalizedX, -normalizedY);
+  player.x = Math.max(40, Math.min(MAP.width - 40, player.x + normalizedX * step));
+  player.y = Math.max(50, Math.min(MAP.height - 50, player.y + normalizedY * step));
+}
+
+io.on("connection", socket => {
+  socket.on("createRoom", ({ name, sessionId } = {}) => {
+    const room = createRoom(rooms, socket, name, sessionId);
+    joinRoom(socket, room, room.players.get(socket.id));
+  });
+
+  socket.on("joinRoom", ({ code, name, sessionId } = {}) => {
+    const room = rooms.get(String(code || "").trim().toUpperCase());
+    if (!room) return socket.emit("errorMessage", "That room code was not found.");
+    if (room.phase !== "lobby") return socket.emit("errorMessage", "This voyage has already begun.");
+    if (room.players.size >= MAX_PLAYERS) return socket.emit("errorMessage", "This ship is full (8 pirates maximum).");
+    const player = createPlayer(socket, name, sessionId);
+    room.players.set(socket.id, player);
+    setMessage(room, `${player.name} has boarded the Mourning Wren.`);
+    joinRoom(socket, room, player);
+  });
+
+  socket.on("rejoinRoom", ({ code, sessionId, name } = {}) => {
+    const room = rooms.get(String(code || "").trim().toUpperCase());
+    if (!room) return socket.emit("errorMessage", "That room no longer exists.");
+    const oldPlayer = [...room.players.values()].find(player => player.sessionId === sessionId);
+    if (!oldPlayer) return socket.emit("errorMessage", "Your old seat could not be recovered.");
+    room.players.delete(oldPlayer.id);
+    oldPlayer.id = socket.id;
+    oldPlayer.connected = true;
+    oldPlayer.name = String(name || oldPlayer.name).trim().slice(0, 18) || oldPlayer.name;
+    if (oldPlayer.isHost) room.hostId = socket.id;
+    room.players.set(socket.id, oldPlayer);
+    setMessage(room, `${oldPlayer.name} has returned to the ship.`);
+    joinRoom(socket, room, oldPlayer);
+  });
+
+  socket.on("selectCharacter", character => {
+    const { room, player } = getPlayerContext(socket);
+    if (!player || room.phase !== "lobby" || !CHARACTERS.includes(character)) return;
+    player.character = character;
+    emitRoom(room);
+  });
+
+  socket.on("startGame", () => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || !player?.isHost) return socket.emit("errorMessage", "Only the captain who created the room can start.");
+    if (!startGame(room)) return socket.emit("errorMessage", "At least two players are required.");
+    emitRoom(room);
+  });
+
+  socket.on("move", ({ dx = 0, dy = 0 } = {}) => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || room.phase !== "playing" || !player?.alive || !player.connected) return;
+    const now = Date.now();
+    if (now - player.lastMove < 45) return;
+    const elapsedSeconds = player.lastMove ? Math.min((now - player.lastMove) / 1000, 0.1) : 0.045;
+    player.lastMove = now;
+    movePlayer(player, Number(dx) || 0, Number(dy) || 0, elapsedSeconds);
+    scheduleRoomUpdate(room);
+  });
+
+  socket.on("interact", taskId => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || room.phase !== "playing" || !player?.alive || player.role !== "crew") return;
+    const task = room.tasks.find(candidate => candidate.id === taskId);
+    if (!task || task.done || distance(player, task) > 72) return socket.emit("errorMessage", "Move closer to an unfinished task first.");
+    task.done = true;
+    setMessage(room, `${player.name} completed: ${task.name}.`);
+    checkWin(room);
+    emitRoom(room);
+  });
+
+  socket.on("sabotage", type => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || room.phase !== "playing" || !player?.alive || player.role !== "hollow" || room.sabotage || Date.now() - player.lastAction < 18000) return;
+    if (!Object.hasOwn(SABOTAGE_TARGETS, type)) return;
+    player.lastAction = Date.now();
+    room.sabotage = { type, endsAt: Date.now() + (type === "helm" ? 30000 : 25000), x: player.x, y: player.y };
+    setMessage(room, type === "lights" ? "The lanterns gutter out across the ship!" : type === "helm" ? "The helm has jammed. The escape route is lost!" : "Black water is flooding the bilge!");
+    emitRoom(room);
+  });
+
+  socket.on("repairSabotage", () => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || room.phase !== "playing" || !player?.alive || player.role !== "crew" || !room.sabotage) return;
+    if (distance(player, SABOTAGE_TARGETS[room.sabotage.type]) > 100) return socket.emit("errorMessage", "Get to the affected station to repair it.");
+    room.sabotage = null;
+    setMessage(room, `${player.name} repaired the ship's system.`);
+    emitRoom(room);
+  });
+
+  socket.on("eliminate", targetId => {
+    const { room, player } = getPlayerContext(socket);
+    const target = room?.players.get(targetId);
+    if (!room || room.phase !== "playing" || !player?.alive) return;
+    if (player.role !== "hollow") return socket.emit("errorMessage", "Only The Hollow can eliminate. You are Crew.");
+    if (!target || target.id === player.id || !target.alive || !target.connected || target.role !== "crew") return socket.emit("errorMessage", "That pirate cannot be eliminated.");
+    if (distance(player, target) > 54) return socket.emit("errorMessage", "Get closer to the Crew member before eliminating.");
+    const cooldownRemaining = 12000 - (Date.now() - player.lastElimination);
+    if (cooldownRemaining > 0) return socket.emit("errorMessage", `Elimination is recharging (${Math.ceil(cooldownRemaining / 1000)}s).`);
+    player.lastElimination = Date.now();
+    target.alive = false;
+    room.bodies.push({ id: target.id, x: target.x, y: target.y });
+    setMessage(room, `${target.name} has vanished beneath the tide.`);
+    checkWin(room);
+    emitRoom(room);
+  });
+
+  socket.on("report", bodyId => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || room.phase !== "playing" || !player?.alive) return;
+    if (bodyId) {
+      const body = room.bodies.find(candidate => candidate.id === bodyId);
+      if (!body || distance(player, body) > 80) return;
+      room.bodies = room.bodies.filter(candidate => candidate.id !== bodyId);
+    } else if (Date.now() - player.lastMeeting < 60000) return socket.emit("errorMessage", "The emergency bell is still cooling down.");
+    player.lastMeeting = Date.now();
+    if (beginMeeting(room, player)) emitRoom(room);
+  });
+
+  socket.on("vote", targetId => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || room.phase !== "meeting" || !player?.alive || !room.meeting || room.meeting.votes[player.id]) return;
+    if (targetId !== "skip" && ![...room.players.values()].some(target => target.id === targetId && target.alive)) return;
+    room.meeting.votes[player.id] = targetId;
+    setMessage(room, `${player.name} has cast a vote.`);
+    if (Object.keys(room.meeting.votes).length >= livingPlayers(room).length) resolveMeeting(room);
+    emitRoom(room);
+  });
+
+  socket.on("disconnect", () => {
+    const { room, player } = getPlayerContext(socket);
+    if (!room || !player) return;
+    player.connected = false;
+    if (room.phase === "lobby") {
+      room.players.delete(socket.id);
+      if (room.hostId === socket.id) {
+        const nextHost = room.players.values().next().value;
+        if (!nextHost) return rooms.delete(room.code);
+        nextHost.isHost = true;
+        room.hostId = nextHost.id;
+      }
+    }
+    emitRoom(room);
+  });
+});
+
+setInterval(() => {
+  const now = Date.now();
+  rooms.forEach(room => {
+    if (room.meeting && now >= room.meeting.endsAt) {
+      resolveMeeting(room);
+      emitRoom(room);
+    }
+    if (room.sabotage && now >= room.sabotage.endsAt) {
+      if (room.sabotage.type === "lights") {
+        room.sabotage = null;
+        setMessage(room, "The lanterns sputter back to life.");
+      } else finishGame(room, "hollow", room.sabotage.type === "helm" ? "The escape route is lost. The Hollow claim the ship." : "The bilge floods beyond saving. The Hollow claim the ship.");
+      emitRoom(room);
+    }
+    if (room.phase === "ended" && now - room.endedAt > 120000) rooms.delete(room.code);
+  });
+}, 500);
+
+server.listen(PORT, () => console.log(`THE HOLLOW TIDE listening on http://localhost:${PORT}`));
