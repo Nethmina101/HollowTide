@@ -33,7 +33,7 @@ function scheduleRoomUpdate(room) {
   const timer = setTimeout(() => {
     pendingRoomUpdates.delete(room);
     emitRoom(room);
-  }, 40);
+  }, 35);
   pendingRoomUpdates.set(room, timer);
 }
 
@@ -49,16 +49,18 @@ function joinRoom(socket, room, player) {
 }
 
 function movePlayer(player, dx, dy, elapsedSeconds, direction, isRunning) {
-  const speed = isRunning ? 180 : 115;
-  const magnitude = Math.hypot(dx, dy) || 1;
-  const normalizedX = Math.max(-1, Math.min(1, dx)) / Math.max(1, magnitude);
-  const normalizedY = Math.max(-1, Math.min(1, dy)) / Math.max(1, magnitude);
-  const step = speed * elapsedSeconds;
+  const speed = isRunning ? 220 : 130;
+  const magnitude = Math.hypot(dx, dy);
+  if (magnitude < 0.001) return;
+
+  const normalizedX = dx / magnitude;
+  const normalizedY = dy / magnitude;
+  const step = Math.min(magnitude, speed * elapsedSeconds);
 
   if (typeof direction === "number" && !isNaN(direction)) {
     player.direction = direction;
-  } else if (Math.hypot(dx, dy) > 0.01) {
-    player.direction = Math.atan2(normalizedX, -normalizedY);
+  } else {
+    player.direction = Math.atan2(normalizedX, normalizedY);
   }
   player.isRunning = !!isRunning;
 
@@ -69,7 +71,7 @@ function movePlayer(player, dx, dy, elapsedSeconds, direction, isRunning) {
     player.x = targetX;
     player.y = targetY;
   } else {
-    // Wall sliding: try horizontal then vertical
+    // Smooth wall sliding
     if (isWalkable(targetX, player.y)) {
       player.x = targetX;
     } else if (isWalkable(player.x, targetY)) {
@@ -86,9 +88,9 @@ function updateBots(room, now) {
     let stateChanged = false;
 
     bots.forEach(bot => {
-      // 1. Check for dead bodies within vision
-      const nearbyBody = room.bodies.find(b => distance(bot, b) < 85);
-      if (nearbyBody && now - bot.lastMeeting > 30000 && (!room.meeting)) {
+      // 1. Check for nearby dead bodies
+      const nearbyBody = room.bodies.find(b => distance(bot, b) < 120);
+      if (nearbyBody && now - bot.lastMeeting > 30000 && !room.meeting) {
         bot.lastMeeting = now;
         room.bodies = room.bodies.filter(b => b.id !== nearbyBody.id);
         beginMeeting(room, bot);
@@ -96,11 +98,11 @@ function updateBots(room, now) {
         return;
       }
 
-      // 2. Hollow bot logic: check for lone crew to eliminate
+      // 2. Hollow bot elimination
       if (bot.role === "hollow") {
-        const canEliminate = now - bot.lastElimination > 15000;
+        const canEliminate = now - bot.lastElimination > 16000;
         if (canEliminate) {
-          const victim = [...room.players.values()].find(p => p.alive && p.connected && p.role === "crew" && distance(bot, p) < 55);
+          const victim = [...room.players.values()].find(p => p.alive && p.connected && p.role === "crew" && distance(bot, p) < 70);
           if (victim && Math.random() < 0.35) {
             bot.lastElimination = now;
             victim.alive = false;
@@ -113,60 +115,59 @@ function updateBots(room, now) {
         }
       }
 
-      // 3. Movement and task progression
+      // 3. Bot Navigation & Wandering on the Grand Galleon
       if (!bot.botState) {
-        bot.botState = { targetX: 600, targetY: 350, nextDecisionTime: 0, targetTaskId: null, workingUntil: 0 };
+        bot.botState = { targetX: 1100, targetY: 650, nextDecisionTime: 0, targetTaskId: null, workingUntil: 0 };
       }
 
-      // If working at a station, wait until timer expires
       if (bot.botState.workingUntil > now) {
         return;
       }
 
-      // Decision making for destination
-      if (now > bot.botState.nextDecisionTime || distance(bot, { x: bot.botState.targetX, y: bot.botState.targetY }) < 35) {
-        // If arrived at an unfinished task and Crew, work on it!
+      if (now > bot.botState.nextDecisionTime || distance(bot, { x: bot.botState.targetX, y: bot.botState.targetY }) < 40) {
+        // Complete current task if arrived
         if (bot.botState.targetTaskId && bot.role === "crew") {
           const task = room.tasks.find(t => t.id === bot.botState.targetTaskId);
           if (task && !task.done) {
             task.done = true;
-            setMessage(room, `${bot.name} repaired: ${task.name}.`);
+            setMessage(room, `${bot.name} completed: ${task.name}.`);
             checkWin(room);
             stateChanged = true;
           }
         }
 
-        // Pick new destination: prioritize remaining tasks or key ship locations
+        // Pick next destination
         const unfinished = room.tasks.filter(t => !t.done);
-        if (unfinished.length > 0 && Math.random() < 0.6) {
+        if (unfinished.length > 0 && Math.random() < 0.65) {
           const pick = unfinished[Math.floor(Math.random() * unfinished.length)];
-          bot.botState.targetX = pick.x + (Math.random() * 20 - 10);
-          bot.botState.targetY = pick.y + (Math.random() * 20 - 10);
+          bot.botState.targetX = pick.x + (Math.random() * 30 - 15);
+          bot.botState.targetY = pick.y + (Math.random() * 30 - 15);
           bot.botState.targetTaskId = pick.id;
-          bot.botState.workingUntil = now + (3000 + Math.random() * 3000);
+          bot.botState.workingUntil = now + (3500 + Math.random() * 3500);
         } else {
-          // Wander to a room
+          // Key waypoints across the massive galleon
           const waypoints = [
-            { x: 240, y: 190 }, // Captain cabin
-            { x: 950, y: 180 }, // Navigation / helm
-            { x: 600, y: 150 }, // Main deck forward
-            { x: 960, y: 490 }, // Cannons
-            { x: 600, y: 600 }, // Bilge
-            { x: 250, y: 490 }, // Cargo
-            { x: 600, y: 350 }  // Midship waist
+            { x: 1700, y: 650 }, // Forecastle bow
+            { x: 1100, y: 480 }, // Port waist
+            { x: 1100, y: 820 }, // Starboard waist
+            { x: 1780, y: 380 }, // Poop deck helm
+            { x: 420, y: 440 },  // Captain's great cabin
+            { x: 440, y: 880 },  // Cargo hold
+            { x: 1100, y: 960 }, // Engine & bilge
+            { x: 1750, y: 920 }  // Cannons
           ];
           const wp = waypoints[Math.floor(Math.random() * waypoints.length)];
-          bot.botState.targetX = wp.x + (Math.random() * 30 - 15);
-          bot.botState.targetY = wp.y + (Math.random() * 30 - 15);
+          bot.botState.targetX = wp.x + (Math.random() * 40 - 20);
+          bot.botState.targetY = wp.y + (Math.random() * 40 - 20);
           bot.botState.targetTaskId = null;
         }
-        bot.botState.nextDecisionTime = now + (6000 + Math.random() * 6000);
+        bot.botState.nextDecisionTime = now + (7000 + Math.random() * 7000);
       }
 
       // Move toward target
       const dx = bot.botState.targetX - bot.x;
       const dy = bot.botState.targetY - bot.y;
-      if (Math.hypot(dx, dy) > 10) {
+      if (Math.hypot(dx, dy) > 15) {
         movePlayer(bot, dx, dy, 0.4, null, false);
         stateChanged = true;
       }
@@ -176,13 +177,16 @@ function updateBots(room, now) {
       scheduleRoomUpdate(room);
     }
   } else if (room.phase === "meeting" && room.meeting) {
-    // Bots cast votes during meetings
+    // Deliberate meeting voting: bots vote gradually across the 45s meeting timer
+    const elapsed = Date.now() - (room.meeting.endsAt - 45000);
     let voted = false;
-    bots.forEach(bot => {
-      if (!room.meeting.votes[bot.id]) {
-        // Vote for a suspect or skip
+
+    bots.forEach((bot, idx) => {
+      // Stagger bot votes across meeting
+      const thresholdTime = 10000 + idx * 7000;
+      if (!room.meeting.votes[bot.id] && elapsed > thresholdTime) {
         const eligible = [...room.players.values()].filter(p => p.alive && p.connected && p.id !== bot.id);
-        if (eligible.length > 0 && Math.random() < 0.4) {
+        if (eligible.length > 0) {
           const target = eligible[Math.floor(Math.random() * eligible.length)];
           room.meeting.votes[bot.id] = Math.random() < 0.25 ? "skip" : target.id;
           voted = true;
@@ -191,9 +195,6 @@ function updateBots(room, now) {
     });
 
     if (voted) {
-      if (Object.keys(room.meeting.votes).length >= livingPlayers(room).length) {
-        resolveMeeting(room);
-      }
       emitRoom(room);
     }
   }
@@ -269,8 +270,8 @@ io.on("connection", socket => {
     const { room, player } = getPlayerContext(socket);
     if (!room || room.phase !== "playing" || !player?.alive || !player.connected) return;
     const now = Date.now();
-    if (now - player.lastMove < 30) return;
-    const elapsedSeconds = player.lastMove ? Math.min((now - player.lastMove) / 1000, 0.1) : 0.04;
+    if (now - player.lastMove < 25) return;
+    const elapsedSeconds = player.lastMove ? Math.min((now - player.lastMove) / 1000, 0.1) : 0.035;
     player.lastMove = now;
     movePlayer(player, Number(dx) || 0, Number(dy) || 0, elapsedSeconds, direction, isRunning);
     scheduleRoomUpdate(room);
@@ -280,7 +281,7 @@ io.on("connection", socket => {
     const { room, player } = getPlayerContext(socket);
     if (!room || room.phase !== "playing" || !player?.alive || player.role !== "crew") return;
     const task = room.tasks.find(candidate => candidate.id === taskId);
-    if (!task || task.done || distance(player, task) > 78) return socket.emit("errorMessage", "Move closer to an unfinished task first.");
+    if (!task || task.done || distance(player, task) > 110) return socket.emit("errorMessage", "Move closer to an unfinished task first.");
     task.done = true;
     setMessage(room, `${player.name} completed: ${task.name}.`);
     checkWin(room);
@@ -292,15 +293,15 @@ io.on("connection", socket => {
     if (!room || room.phase !== "playing" || !player?.alive || player.role !== "hollow" || room.sabotage || Date.now() - player.lastAction < 18000) return;
     if (!Object.hasOwn(SABOTAGE_TARGETS, type)) return;
     player.lastAction = Date.now();
-    room.sabotage = { type, endsAt: Date.now() + (type === "helm" ? 30000 : 25000), x: player.x, y: player.y };
-    setMessage(room, type === "lights" ? "The lanterns gutter out across the ship!" : type === "helm" ? "The helm has jammed. The escape route is lost!" : "Black water is flooding the bilge!");
+    room.sabotage = { type, endsAt: Date.now() + (type === "helm" ? 35000 : 30000), x: player.x, y: player.y };
+    setMessage(room, type === "lights" ? "The lanterns gutter out across the ship!" : type === "helm" ? "The helm has jammed! The ship drifts toward the rocks!" : "Black bilge water is flooding the lower deck!");
     emitRoom(room);
   });
 
   socket.on("repairSabotage", () => {
     const { room, player } = getPlayerContext(socket);
     if (!room || room.phase !== "playing" || !player?.alive || player.role !== "crew" || !room.sabotage) return;
-    if (distance(player, SABOTAGE_TARGETS[room.sabotage.type]) > 100) return socket.emit("errorMessage", "Get to the affected station to repair it.");
+    if (distance(player, SABOTAGE_TARGETS[room.sabotage.type]) > 140) return socket.emit("errorMessage", "Get to the affected station to repair it.");
     room.sabotage = null;
     setMessage(room, `${player.name} repaired the ship's system.`);
     emitRoom(room);
@@ -312,7 +313,7 @@ io.on("connection", socket => {
     if (!room || room.phase !== "playing" || !player?.alive) return;
     if (player.role !== "hollow") return socket.emit("errorMessage", "Only The Hollow can eliminate. You are Crew.");
     if (!target || target.id === player.id || !target.alive || !target.connected || target.role !== "crew") return socket.emit("errorMessage", "That pirate cannot be eliminated.");
-    if (distance(player, target) > 65) return socket.emit("errorMessage", "Get closer to the Crew member before eliminating.");
+    if (distance(player, target) > 90) return socket.emit("errorMessage", "Get closer to the Crew member before eliminating.");
     const cooldownRemaining = 12000 - (Date.now() - player.lastElimination);
     if (cooldownRemaining > 0) return socket.emit("errorMessage", `Elimination is recharging (${Math.ceil(cooldownRemaining / 1000)}s).`);
     player.lastElimination = Date.now();
@@ -328,7 +329,7 @@ io.on("connection", socket => {
     if (!room || room.phase !== "playing" || !player?.alive) return;
     if (bodyId) {
       const body = room.bodies.find(candidate => candidate.id === bodyId);
-      if (!body || distance(player, body) > 85) return;
+      if (!body || distance(player, body) > 120) return;
       room.bodies = room.bodies.filter(candidate => candidate.id !== bodyId);
     } else if (Date.now() - player.lastMeeting < 60000) return socket.emit("errorMessage", "The emergency bell is still cooling down.");
     player.lastMeeting = Date.now();
@@ -342,15 +343,9 @@ io.on("connection", socket => {
     room.meeting.votes[player.id] = targetId;
     setMessage(room, `${player.name} has cast a vote.`);
 
+    // If everyone (including bots) has now voted, end meeting
     const living = livingPlayers(room);
-    const livingHumans = living.filter(p => !p.isBot);
-    const allHumansVoted = livingHumans.every(p => room.meeting.votes[p.id]);
-
-    if (Object.keys(room.meeting.votes).length >= living.length || (allHumansVoted && living.length > 0)) {
-      living.filter(p => p.isBot && !room.meeting.votes[p.id]).forEach(bot => {
-        const eligible = living.filter(p => p.id !== bot.id);
-        room.meeting.votes[bot.id] = eligible.length > 0 && Math.random() < 0.6 ? eligible[Math.floor(Math.random() * eligible.length)].id : "skip";
-      });
+    if (Object.keys(room.meeting.votes).length >= living.length) {
       resolveMeeting(room);
     }
     emitRoom(room);
@@ -378,6 +373,11 @@ setInterval(() => {
   rooms.forEach(room => {
     updateBots(room, now);
     if (room.meeting && now >= room.meeting.endsAt) {
+      // Cast votes for any remaining bots or players who timed out
+      const living = livingPlayers(room);
+      living.forEach(p => {
+        if (!room.meeting.votes[p.id]) room.meeting.votes[p.id] = "skip";
+      });
       resolveMeeting(room);
       emitRoom(room);
     }
@@ -390,6 +390,6 @@ setInterval(() => {
     }
     if (room.phase === "ended" && now - room.endedAt > 120000) rooms.delete(room.code);
   });
-}, 400);
+}, 350);
 
 server.listen(PORT, () => console.log(`THE HOLLOW TIDE listening on http://localhost:${PORT}`));

@@ -1,40 +1,46 @@
 const crypto = require("crypto");
 
-const MAP = { width: 1200, height: 760 };
+// Expanded Grand Man-of-War Galleon Dimensions
+const MAP = { width: 2200, height: 1300 };
 const TASKS = [
-  { id: "compass", name: "Recalibrate the compass", x: 960, y: 170, room: "Navigation" },
-  { id: "lantern", name: "Refill the lanterns", x: 600, y: 130, room: "Main Deck" },
-  { id: "logbook", name: "Check the ship's log", x: 220, y: 180, room: "Captain's Cabin" },
-  { id: "cannon", name: "Secure the cannon", x: 980, y: 500, room: "Cannon Deck" },
-  { id: "bilge", name: "Pump the bilge", x: 600, y: 620, room: "Engine & Bilge" },
-  { id: "cargo", name: "Inspect the relic crate", x: 240, y: 500, room: "Cargo Hold" }
+  { id: "compass", name: "Recalibrate the compass", x: 1780, y: 380, room: "Navigation Deck" },
+  { id: "lantern", name: "Refill the lanterns", x: 1100, y: 340, room: "Main Deck Waist" },
+  { id: "logbook", name: "Check the ship's log", x: 420, y: 440, room: "Captain's Cabin" },
+  { id: "cannon", name: "Secure the cannons", x: 1750, y: 920, room: "Cannon Deck" },
+  { id: "bilge", name: "Pump the bilge", x: 1100, y: 960, room: "Engine & Bilge" },
+  { id: "cargo", name: "Inspect the relic crate", x: 440, y: 880, room: "Cargo Hold" }
 ];
 const COLORS = ["#b9a078", "#7e9990", "#8c4a43", "#9c8355", "#b8b1a0", "#637c83", "#876f83", "#a56e4f"];
 const CHARACTERS = ["Captain", "Deckhand", "Navigator", "Shipwright", "Surgeon", "Smuggler", "Occultist", "Cursed One"];
-const BOT_NAMES = ["Barnaby Bones", "Old Salt", "Anne Bonny", "Calico Jack", "Redbeard", "Salty Sam", "Pegleg Pete"];
-const SABOTAGE_TARGETS = { lights: { x: 600, y: 130 }, helm: { x: 960, y: 170 }, flood: { x: 600, y: 620 } };
+const BOT_NAMES = ["Barnaby Bones", "Old Salt", "Anne Bonny", "Calico Jack", "Redbeard", "Salty Sam", "Pegleg Pete", "Blackbeard"];
+const SABOTAGE_TARGETS = { lights: { x: 1100, y: 340 }, helm: { x: 1780, y: 380 }, flood: { x: 1100, y: 960 } };
 
 const cloneTasks = () => TASKS.map(task => ({ ...task, done: false }));
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 const livingPlayers = room => [...room.players.values()].filter(player => player.alive && player.connected);
 
 function isWalkable(x, y) {
-  // Ship hull outer perimeter
-  if (x < 120 || x > 1080 || y < 110 || y > 650) return false;
-  // Bow narrowing (x > 840)
-  if (x > 840) {
-    const factor = (x - 840) / 240;
-    const maxOffset = 270 * (1 - factor * 0.42);
-    if (Math.abs(y - 380) > maxOffset) return false;
+  // Ship hull outer perimeter for grand galleon
+  if (x < 220 || x > 1980 || y < 240 || y > 1060) return false;
+
+  // Bow narrowing (x > 1520)
+  if (x > 1520) {
+    const factor = (x - 1520) / 460;
+    const maxOffset = 410 * (1 - factor * 0.45);
+    if (Math.abs(y - 650) > maxOffset) return false;
   }
-  // Stern narrowing (x < 260)
-  if (x < 260) {
-    const factor = (260 - x) / 140;
-    const maxOffset = 270 * (1 - factor * 0.28);
-    if (Math.abs(y - 380) > maxOffset) return false;
+  // Stern narrowing (x < 520)
+  if (x < 520) {
+    const factor = (520 - x) / 300;
+    const maxOffset = 410 * (1 - factor * 0.28);
+    if (Math.abs(y - 650) > maxOffset) return false;
   }
-  // Main mast physical obstacle
-  if (Math.hypot(x - 690, y - 350) < 26) return false;
+
+  // Mast physical obstacles (foremast, mainmast, mizzenmast)
+  if (Math.hypot(x - 1600, y - 650) < 32) return false;
+  if (Math.hypot(x - 1100, y - 650) < 38) return false;
+  if (Math.hypot(x - 600, y - 650) < 32) return false;
+
   return true;
 }
 
@@ -52,8 +58,8 @@ function createPlayer(socket, name, sessionId, isHost = false) {
     color: COLORS[Math.floor(Math.random() * COLORS.length)],
     character: CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)],
     direction: 0,
-    x: 600 + Math.random() * 50 - 25,
-    y: 340 + Math.random() * 50 - 25,
+    x: 1100 + Math.random() * 80 - 40,
+    y: 650 + Math.random() * 60 - 30,
     role: null,
     alive: true,
     connected: true,
@@ -79,8 +85,8 @@ function addBot(room) {
     color: COLORS[room.players.size % COLORS.length],
     character: CHARACTERS[room.players.size % CHARACTERS.length],
     direction: Math.random() * Math.PI * 2,
-    x: 600 + (Math.random() * 60 - 30),
-    y: 350 + (Math.random() * 60 - 30),
+    x: 1100 + (Math.random() * 100 - 50),
+    y: 650 + (Math.random() * 80 - 40),
     role: null,
     alive: true,
     connected: true,
@@ -92,8 +98,8 @@ function addBot(room) {
     lastMeeting: 0,
     lastElimination: 0,
     botState: {
-      targetX: 600,
-      targetY: 350,
+      targetX: 1100,
+      targetY: 650,
       nextDecisionTime: 0,
       targetTaskId: null,
       workingUntil: 0
@@ -159,7 +165,6 @@ function checkWin(room) {
   const crew = players.filter(player => player.alive && player.role === "crew").length;
   const hollow = players.filter(player => player.alive && player.role === "hollow").length;
   if (hollow === 0) finishGame(room, "crew", "The Hollow have been cast out. The crew survives.");
-  // Duel condition for small lobbies
   else if (crew === 0 || (players.length > 2 && hollow >= crew)) finishGame(room, "hollow", "The Hollow outnumber the living crew. The ship belongs to the tide.");
   else if (room.tasks.every(task => task.done)) finishGame(room, "crew", "The escape sequence is complete. The crew launches into the fog.");
   return room.phase === "ended";
@@ -167,7 +172,7 @@ function checkWin(room) {
 
 function startGame(room) {
   if (room.phase !== "lobby") return false;
-  // If solo captain starts, auto-add 2 bots to ensure a full playable voyage!
+  // If solo captain starts, auto-add 2 bots to ensure a full playable voyage
   while (room.players.size < 3) {
     addBot(room);
   }
@@ -175,8 +180,8 @@ function startGame(room) {
   players.forEach((player, index) => {
     player.role = "crew";
     player.alive = true;
-    player.x = 600 + (index % 4) * 28 - 42;
-    player.y = 350 + Math.floor(index / 4) * 28 - 14;
+    player.x = 1100 + (index % 4) * 36 - 54;
+    player.y = 650 + Math.floor(index / 4) * 36 - 18;
     player.direction = 0;
   });
   const hollowCount = players.length >= 6 ? 2 : 1;
@@ -195,6 +200,7 @@ function startGame(room) {
 
 function beginMeeting(room, reporter) {
   if (room.phase !== "playing" || room.meeting) return false;
+  // 45 seconds meeting timer for proper discussion and voting deliberation
   room.meeting = { endsAt: Date.now() + 45000, votes: {}, reporter: reporter.id };
   room.phase = "meeting";
   setMessage(room, `${reporter.name} rang the bell. Discuss what you saw, then vote.`);

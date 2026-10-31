@@ -10,18 +10,17 @@
 :root{
   --oak:#382417;--dark-oak:#1c120c;--parchment:#dcc59c;--brass:#c29c54;--gold:#e8be67;
   --blood:#822a2e;--blood-glow:#b83b41;--tar:#0c0a09;--sea:#3a6c72;--sea-glow:#64b3be;
-  --panel-bg:linear-gradient(145deg,rgba(38,26,19,0.94),rgba(18,13,10,0.96));
-  --border-gold:1px solid rgba(194,156,84,0.45);
+  --panel-bg:linear-gradient(145deg,rgba(34,24,18,0.95),rgba(14,10,8,0.97));
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:#090b0e;color:#e8d9bd;font-family:'IM Fell English',serif;
+  background:#050a0e;color:#e8d9bd;font-family:'IM Fell English',serif;
   min-height:100vh;overflow:hidden;user-select:none;
 }
 button,input,select{font:inherit}
 button{
   cursor:pointer;color:#f3e4c4;background:linear-gradient(180deg,#644329,#382417);
-  border:1px solid #9e7a42;border-radius:4px;padding:9px 15px;
+  border:1px solid #9e7a42;border-radius:4px;padding:9px 16px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.15),0 4px 10px rgba(0,0,0,0.5);
   font-family:'Cinzel',serif;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;
   transition:all 0.16s ease;text-shadow:0 1px 2px #000;
@@ -38,11 +37,11 @@ h1,h2,h3,.title-font{font-family:'Cinzel',serif;letter-spacing:0.08em;text-trans
 
 /* Screen Wrappers */
 .hidden, .app-screen.hidden, #meetingOverlay.hidden, #endOverlay.hidden, #roomScreen.hidden, #lobbyScreen.hidden, #gameHud.hidden { display:none!important }
-.app-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:20;background:radial-gradient(ellipse at center,rgba(20,28,34,0.92) 0%,rgba(6,8,10,0.98) 75%)}
+.app-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:20;background:radial-gradient(ellipse at center,rgba(16,24,30,0.94) 0%,rgba(4,6,8,0.98) 75%)}
 
 /* Lobby Modal */
 .modal-frame{
-  width:min(900px,94vw);max-height:92vh;overflow-y:auto;background:var(--panel-bg);
+  width:min(920px,94vw);max-height:92vh;overflow-y:auto;background:var(--panel-bg);
   border:2px solid #8e6d3c;border-radius:10px;box-shadow:0 25px 60px rgba(0,0,0,0.85),inset 0 0 0 1px rgba(255,215,130,0.15);
   padding:28px;position:relative;
 }
@@ -50,7 +49,7 @@ h1,h2,h3,.title-font{font-family:'Cinzel',serif;letter-spacing:0.08em;text-trans
   content:'';position:absolute;inset:4px;border:1px solid rgba(142,109,60,0.3);pointer-events:none;border-radius:7px;
 }
 .masthead{text-align:center;margin-bottom:24px}
-.masthead h1{font-size:clamp(2rem,5vw,3.4rem);color:#e8be67;text-shadow:0 3px 0 #281910,0 0 25px rgba(232,190,103,0.4)}
+.masthead h1{font-size:clamp(2rem,5vw,3.6rem);color:#e8be67;text-shadow:0 3px 0 #281910,0 0 25px rgba(232,190,103,0.4)}
 .masthead .sub{font-size:0.85rem;color:#b29871;letter-spacing:0.22em;margin-top:6px;font-family:'Cinzel',serif}
 .seal{display:inline-block;padding:4px 14px;border:1px solid #8e6d3c;font-size:0.65rem;color:#c9a96e;letter-spacing:0.2em;margin-bottom:8px;font-family:'Cinzel',serif}
 
@@ -70,7 +69,7 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 .pill.gold{color:#ffe49e;border-color:#c29c54;background:rgba(194,156,84,0.2)}
 
 /* 3D Game Container */
-#gameWrapper{position:fixed;inset:0;overflow:hidden;background:#050d12}
+#gameWrapper{position:fixed;inset:0;overflow:hidden;background:#03080c}
 #gameCanvas{width:100%;height:100%;display:block;touch-action:none}
 
 /* In-game HUD */
@@ -79,7 +78,7 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 .hud-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
 
 .hud-panel{
-  pointer-events:auto;background:rgba(18,14,11,0.85);backdrop-filter:blur(8px);
+  pointer-events:auto;background:rgba(18,14,11,0.88);backdrop-filter:blur(8px);
   border:1px solid rgba(194,156,84,0.4);border-radius:8px;padding:10px 14px;
   box-shadow:0 8px 24px rgba(0,0,0,0.6),inset 0 0 0 1px rgba(255,255,255,0.05);
 }
@@ -92,8 +91,8 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 .objective-box .text{font-size:0.95rem;color:#f3e4c4;margin-top:2px;font-weight:500}
 
 /* Minimap */
-#minimapCard{width:160px;height:120px;position:relative;padding:6px;border-radius:8px}
-#minimapCanvas{width:100%;height:100%;display:block;border-radius:4px;background:#0a1216}
+#minimapCard{width:170px;height:120px;position:relative;padding:6px;border-radius:8px}
+#minimapCanvas{width:100%;height:100%;display:block;border-radius:4px;background:#081014}
 
 /* Active Interaction Prompt */
 #interactPrompt{
@@ -118,7 +117,7 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 
 /* Side Drawer (Manifest & Ship Log) */
 #sideMenu{
-  position:fixed;top:0;right:0;bottom:0;width:min(380px,90vw);
+  position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);
   background:linear-gradient(180deg,rgba(24,18,13,0.96),rgba(12,9,7,0.98));
   backdrop-filter:blur(10px);border-left:2px solid #8e6d3c;z-index:25;
   box-shadow:-10px 0 40px rgba(0,0,0,0.85);padding:24px;overflow-y:auto;
@@ -148,11 +147,11 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 
 /* Meeting / Voting Overlay */
 #meetingOverlay{
-  position:fixed;inset:0;background:rgba(10,8,6,0.88);backdrop-filter:blur(10px);
+  position:fixed;inset:0;background:rgba(8,6,5,0.92);backdrop-filter:blur(12px);
   z-index:30;display:flex;align-items:center;justify-content:center;
 }
 .meeting-modal{
-  width:min(680px,94vw);background:var(--panel-bg);border:2px solid #8e6d3c;
+  width:min(720px,94vw);background:var(--panel-bg);border:2px solid #8e6d3c;
   border-radius:10px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,0.9);
 }
 
@@ -174,13 +173,6 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 }
 .touch-btn{width:52px;height:52px;border-radius:50%;padding:0;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
 @media(max-width:850px){.touch-controls{display:grid}.hud-top{flex-direction:column;gap:8px}}
-
-/* Character Preview Box in Lobby */
-#charPreviewBox{
-  width:100%;height:180px;background:rgba(0,0,0,0.3);border:1px solid rgba(194,156,84,0.3);
-  border-radius:6px;position:relative;overflow:hidden;margin-bottom:12px;
-}
-#previewCanvas{width:100%;height:100%;display:block}
 </style>
 </head>
 <body>
@@ -210,7 +202,7 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 
     <div class="hud-panel" style="display:flex;gap:8px;align-items:center">
       <div id="minimapCard">
-        <canvas id="minimapCanvas" width="160" height="120"></canvas>
+        <canvas id="minimapCanvas" width="170" height="120"></canvas>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px">
         <button id="toggleAudioBtn" title="Toggle Sound">🔊 AUDIO</button>
@@ -302,15 +294,15 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
         <button id="btnJoinVoyage" style="width:100%">BOARD VOYAGE</button>
 
         <div style="margin-top:16px;font-size:0.75rem;color:#9b8260;line-height:1.5">
-          ✦ 3D Third-Person Movement · Realistic Galleon Exploration<br>
-          ✦ Play Solo with AI Crewmates or with up to 8 Players Online!
+          ✦ Grand Galleon 3D Ship · Full 3rd-Person WASD Controls<br>
+          ✦ Play Solo with Autonomous AI Crewmates or with Friends Online!
         </div>
       </div>
 
       <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(194,156,84,0.3);border-radius:6px;padding:16px">
         <h3 style="color:#e8be67;font-size:0.95rem;margin-bottom:8px">THE CAPTAIN'S LOG</h3>
         <p style="font-size:0.86rem;line-height:1.5;color:#c7b18d;margin-bottom:10px">
-          The Mourning Wren drifts in occult fog. Saboteurs known as <em>The Hollow</em> walk among us in pirate skin.
+          The grand flagship Mourning Wren sails deep into occult waters. Saboteurs known as <em>The Hollow</em> lurk in pirate skin.
         </p>
         <div style="display:flex;flex-direction:column;gap:8px;font-size:0.82rem">
           <div style="display:flex;align-items:center;gap:8px"><span class="pill crew">CREW</span><span>Repair all 6 ship stations or vote out the Hollow.</span></div>
@@ -376,8 +368,11 @@ input:focus,select:focus{border-color:#e8be67;box-shadow:0 0 8px rgba(232,190,10
 <div id="meetingOverlay" class="hidden">
   <div class="meeting-modal">
     <h2 style="color:#e8be67;font-size:1.4rem;text-align:center;margin-bottom:6px">THE SHIP'S BELL TOLLS</h2>
+    <div id="meetingTimerClock" style="font-family:'Cinzel',serif;font-size:1.1rem;color:#ffd166;text-align:center;margin-bottom:8px">
+      DELIBERATION TIME: 45s
+    </div>
     <p id="meetingStatusText" style="text-align:center;color:#b29871;font-size:0.9rem;margin-bottom:16px">
-      Discuss what occurred on deck and cast your vote.
+      Discuss what occurred on deck and cast your vote before the timer expires.
     </p>
     <div id="meetingCandidatesList" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px"></div>
     <div style="display:flex;justify-content:center">
@@ -421,7 +416,6 @@ class SoundSynth {
   }
   startAmbientSea() {
     if (!this.ctx || !this.enabled) return;
-    // Continuous brown/pink noise generator for ocean waves & ship creaks
     const bufferSize = this.ctx.sampleRate * 2;
     const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -447,7 +441,7 @@ class SoundSynth {
   playFootstep(isRunning) {
     if (!this.ctx || !this.enabled) return;
     const now = Date.now();
-    const minInterval = isRunning ? 260 : 380;
+    const minInterval = isRunning ? 230 : 340;
     if (now - this.lastFootstep < minInterval) return;
     this.lastFootstep = now;
 
@@ -517,9 +511,6 @@ let shownEnd = false;
 let activePromptTask = null;
 let activePromptBody = null;
 
-// ==========================================
-// 3. UI NOTIFICATIONS & HELPERS
-// ==========================================
 function toast(msg) {
   const box = $("toastBox");
   box.textContent = msg;
@@ -537,7 +528,7 @@ function setScreen(which) {
 }
 
 // ==========================================
-// 4. THREE.JS 3D WORLD: THE MOURNING WREN
+// 3. THREE.JS 3D WORLD: GRAND GALLEON
 // ==========================================
 function init3DWorld() {
   const canvas = $("gameCanvas");
@@ -548,67 +539,66 @@ function init3DWorld() {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color("#061016");
-  scene.fog = new THREE.FogExp2("#09171f", 0.028);
+  scene.background = new THREE.Color("#050d14");
+  scene.fog = new THREE.FogExp2("#07141d", 0.018);
 
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 180);
-  camera.position.set(0, 7, 8);
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 240);
+  camera.position.set(0, 9, 12);
 
   // Lighting
-  const ambientLight = new THREE.AmbientLight("#456775", 1.2);
+  const ambientLight = new THREE.AmbientLight("#406070", 1.25);
   scene.add(ambientLight);
 
-  const moonLight = new THREE.DirectionalLight("#e6f3ff", 2.0);
-  moonLight.position.set(-15, 28, 12);
+  const moonLight = new THREE.DirectionalLight("#e8f4ff", 2.2);
+  moonLight.position.set(-25, 45, 20);
   moonLight.castShadow = true;
   moonLight.shadow.mapSize.set(2048, 2048);
   moonLight.shadow.camera.near = 1;
-  moonLight.shadow.camera.far = 70;
-  moonLight.shadow.camera.left = -16;
-  moonLight.shadow.camera.right = 16;
-  moonLight.shadow.camera.top = 16;
-  moonLight.shadow.camera.bottom = -16;
-  moonLight.shadow.bias = -0.0005;
+  moonLight.shadow.camera.far = 120;
+  moonLight.shadow.camera.left = -26;
+  moonLight.shadow.camera.right = 26;
+  moonLight.shadow.camera.top = 26;
+  moonLight.shadow.camera.bottom = -26;
+  moonLight.shadow.bias = -0.0004;
   scene.add(moonLight);
 
-  // Starfield & Moon
+  // Starfield & Glowing Moon
   const starsGeo = new THREE.BufferGeometry();
   const starCoords = [];
-  for (let i = 0; i < 900; i++) {
-    const x = (Math.random() - 0.5) * 140;
-    const y = 20 + Math.random() * 60;
-    const z = (Math.random() - 0.5) * 140;
+  for (let i = 0; i < 1200; i++) {
+    const x = (Math.random() - 0.5) * 220;
+    const y = 30 + Math.random() * 80;
+    const z = (Math.random() - 0.5) * 220;
     starCoords.push(x, y, z);
   }
   starsGeo.setAttribute("position", new THREE.Float32BufferAttribute(starCoords, 3));
-  const starsMat = new THREE.PointsMaterial({ color: "#dbe8f5", size: 0.8, transparent: true, opacity: 0.85 });
+  const starsMat = new THREE.PointsMaterial({ color: "#dbe8f5", size: 0.9, transparent: true, opacity: 0.85 });
   const stars = new THREE.Points(starsGeo, starsMat);
   scene.add(stars);
 
   const moonMesh = new THREE.Mesh(
-    new THREE.SphereGeometry(3.5, 24, 24),
-    new THREE.MeshBasicMaterial({ color: "#fff5db" })
+    new THREE.SphereGeometry(4.5, 32, 32),
+    new THREE.MeshBasicMaterial({ color: "#fff7e0" })
   );
-  moonMesh.position.set(-28, 42, 22);
+  moonMesh.position.set(-42, 60, 32);
   scene.add(moonMesh);
 
   // Dynamic Animated Ocean
-  const oceanGeo = new THREE.PlaneGeometry(90, 80, 48, 48);
+  const oceanGeo = new THREE.PlaneGeometry(160, 140, 64, 64);
   const oceanMat = new THREE.MeshStandardMaterial({
-    color: "#184552", roughness: 0.2, metalness: 0.45,
-    wireframe: false, flatShading: true
+    color: "#16424e", roughness: 0.18, metalness: 0.42, flatShading: true
   });
   const ocean = new THREE.Mesh(oceanGeo, oceanMat);
   ocean.rotation.x = -Math.PI / 2;
-  ocean.position.y = -1.1;
+  ocean.position.y = -1.2;
   scene.add(ocean);
 
   // Ship Root Group (for subtle rocking motion)
   const shipGroup = new THREE.Group();
   scene.add(shipGroup);
 
-  // Galleon Hull Construction
-  buildDetailedGalleon(shipGroup);
+  // Build Grand Galleon Architecture
+  buildGrandGalleon(shipGroup);
 
   // Interactive Stations 3D Models
   const stationMeshes = new Map();
@@ -617,172 +607,227 @@ function init3DWorld() {
   return {
     renderer, scene, camera, ambientLight, moonLight, ocean, oceanGeo,
     shipGroup, stationMeshes, players: new Map(), bodies: new Map(),
-    cameraMode: "third", cameraYaw: 0, cameraPitch: 0.38, cameraDist: 7.2,
-    cameraTarget: new THREE.Vector3(0, 0.8, 0),
-    isDragging: false, prevMouseX: 0, prevMouseY: 0,
-    bellMesh: null, helmWheel: null
+    cameraMode: "third", cameraYaw: 0, cameraPitch: 0.36, cameraDist: 8.5,
+    cameraTarget: new THREE.Vector3(0, 1.0, 0),
+    isDragging: false, prevMouseX: 0, prevMouseY: 0
   };
 }
 
-// Convert 2D map coords (1200x760) into 3D world space (centered at 0,0)
+// Convert 2D map coords (2200x1300) into 3D world space (centered at 0,0)
 function mapToWorld(x, y) {
-  return new THREE.Vector3((x - 600) / 60, 0, (y - 380) / 60);
+  return new THREE.Vector3((x - 1100) / 50, 0, (y - 650) / 50);
 }
 
-// Build the Authentic 3D Galleon "The Mourning Wren"
-function buildDetailedGalleon(shipGroup) {
-  const woodDark = new THREE.MeshStandardMaterial({ color: "#2d1d14", roughness: 0.82 });
-  const woodPlank = new THREE.MeshStandardMaterial({ color: "#4f3726", roughness: 0.72 });
-  const woodTrim = new THREE.MeshStandardMaterial({ color: "#6a4b33", roughness: 0.65 });
-  const goldTrim = new THREE.MeshStandardMaterial({ color: "#d1a84f", metalness: 0.65, roughness: 0.35 });
-  const ironMat = new THREE.MeshStandardMaterial({ color: "#1a1c1e", metalness: 0.8, roughness: 0.4 });
-  const sailMat = new THREE.MeshStandardMaterial({ color: "#ded6c3", roughness: 0.9, side: THREE.DoubleSide });
+// Build Grand Galleon Man-of-War Architecture
+function buildGrandGalleon(shipGroup) {
+  const woodDark = new THREE.MeshStandardMaterial({ color: "#2b1c13", roughness: 0.85 });
+  const woodPlank = new THREE.MeshStandardMaterial({ color: "#543b28", roughness: 0.72 });
+  const woodTrim = new THREE.MeshStandardMaterial({ color: "#6e4b30", roughness: 0.65 });
+  const goldTrim = new THREE.MeshStandardMaterial({ color: "#d5a94d", metalness: 0.7, roughness: 0.35 });
+  const ironMat = new THREE.MeshStandardMaterial({ color: "#1c1f22", metalness: 0.82, roughness: 0.38 });
+  const sailMat = new THREE.MeshStandardMaterial({ color: "#dfd8c7", roughness: 0.9, side: THREE.DoubleSide });
 
-  // 1. Curved Galleon Outer Hull
+  // 1. Grand Galleon Curved Outer Hull (36 units long, 18 units wide)
   const hullShape = new THREE.Shape();
-  hullShape.moveTo(-9.2, 0);
-  hullShape.bezierCurveTo(-9.0, 5.0, 5.5, 4.8, 9.2, 0);
-  hullShape.bezierCurveTo(5.5, -4.8, -9.0, -5.0, -9.2, 0);
-  const hullExtrudeSettings = { depth: 1.4, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.3, bevelThickness: 0.3 };
+  hullShape.moveTo(-17.5, 0);
+  hullShape.bezierCurveTo(-17.0, 8.8, 10.5, 8.5, 17.5, 0);
+  hullShape.bezierCurveTo(10.5, -8.5, -17.0, -8.8, -17.5, 0);
+  const hullExtrudeSettings = { depth: 2.2, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.45, bevelThickness: 0.45 };
   const hullGeo = new THREE.ExtrudeGeometry(hullShape, hullExtrudeSettings);
   const hullMesh = new THREE.Mesh(hullGeo, woodDark);
   hullMesh.rotation.x = Math.PI / 2;
-  hullMesh.position.y = -0.3;
+  hullMesh.position.y = -0.4;
   hullMesh.receiveShadow = true;
   shipGroup.add(hullMesh);
 
-  // 2. Main Deck Planks with procedural grooves
-  const deckGeo = new THREE.BoxGeometry(17.8, 0.35, 9.2);
+  // 2. Main Deck Planks
+  const deckGeo = new THREE.BoxGeometry(34.0, 0.45, 16.2);
   const deckMesh = new THREE.Mesh(deckGeo, woodPlank);
-  deckMesh.position.set(0, -0.15, 0);
+  deckMesh.position.set(0, -0.2, 0);
   deckMesh.receiveShadow = true;
   shipGroup.add(deckMesh);
 
-  // 3. Raised Forecastle Deck (Bow)
-  const foreDeck = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.6, 7.6), woodPlank);
-  foreDeck.position.set(6.6, 0.15, 0);
+  // 3. Raised Forecastle Deck (Bow, x = +9.5 to +16.5)
+  const foreDeck = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.9, 13.8), woodPlank);
+  foreDeck.position.set(12.8, 0.35, 0);
   foreDeck.receiveShadow = true;
   shipGroup.add(foreDeck);
 
-  // 4. Raised Quarterdeck & Poop Deck (Stern)
-  const quarterDeck = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.55, 7.8), woodPlank);
-  quarterDeck.position.set(-6.2, 0.12, 0);
+  // Forecastle Staircases
+  [-5.8, 5.8].forEach(z => {
+    const stair = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.6, 1.6), woodTrim);
+    stair.position.set(8.6, 0.1, z);
+    stair.rotation.z = -0.35;
+    shipGroup.add(stair);
+  });
+
+  // 4. Raised Quarterdeck & Poop Deck (Stern, x = -8.5 to -16.5)
+  const quarterDeck = new THREE.Mesh(new THREE.BoxGeometry(8.5, 0.85, 14.5), woodPlank);
+  quarterDeck.position.set(-12.2, 0.3, 0);
   quarterDeck.receiveShadow = true;
   shipGroup.add(quarterDeck);
 
-  // Stern Poop Deck Gallery
-  const poopDeck = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.5, 6.4), woodDark);
-  poopDeck.position.set(-7.5, 0.58, 0);
+  // Quarterdeck Staircases
+  [-6.2, 6.2].forEach(z => {
+    const stair = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.6, 1.6), woodTrim);
+    stair.position.set(-7.4, 0.1, z);
+    stair.rotation.z = 0.35;
+    shipGroup.add(stair);
+  });
+
+  // Elevated Poop Deck (Grand Stern Cabin Roof)
+  const poopDeck = new THREE.Mesh(new THREE.BoxGeometry(5.0, 0.75, 12.0), woodDark);
+  poopDeck.position.set(-14.8, 1.05, 0);
   poopDeck.receiveShadow = true;
   shipGroup.add(poopDeck);
 
-  // Stern Windows (Moonlit Stained Glass)
-  const sternGlassMat = new THREE.MeshStandardMaterial({ color: "#5bb6c7", emissive: "#154249", emissiveIntensity: 0.6, roughness: 0.2 });
-  const sternWindows = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.7, 4.6), sternGlassMat);
-  sternWindows.position.set(-8.8, 0.3, 0);
+  // Grand Stern Gallery Windows (Leaded Stained Glass overlooking the ocean wake)
+  const sternGlassMat = new THREE.MeshStandardMaterial({ color: "#66c4d4", emissive: "#174a52", emissiveIntensity: 0.65, roughness: 0.2 });
+  const sternWindows = new THREE.Mesh(new THREE.BoxGeometry(0.2, 1.2, 9.4), sternGlassMat);
+  sternWindows.position.set(-17.2, 0.55, 0);
   shipGroup.add(sternWindows);
 
-  // 5. Bowsprit Spar & Figurehead
-  const bowsprit = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.28, 4.8, 10), woodTrim);
-  bowsprit.rotation.z = -Math.PI / 2.7;
-  bowsprit.position.set(10.2, 0.9, 0);
+  // 5. Bowsprit Spar & Golden Siren Figurehead
+  const bowsprit = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.44, 9.5, 12), woodTrim);
+  bowsprit.rotation.z = -Math.PI / 2.8;
+  bowsprit.position.set(20.5, 1.6, 0);
   bowsprit.castShadow = true;
   shipGroup.add(bowsprit);
 
-  // Golden Sea Serpent Figurehead
-  const figurehead = new THREE.Mesh(new THREE.ConeGeometry(0.35, 1.2, 8), goldTrim);
-  figurehead.rotation.z = -Math.PI / 2.4;
-  figurehead.position.set(9.4, 0.45, 0);
+  // Golden Sea Siren Figurehead
+  const figurehead = new THREE.Mesh(new THREE.ConeGeometry(0.55, 2.0, 10), goldTrim);
+  figurehead.rotation.z = -Math.PI / 2.35;
+  figurehead.position.set(18.2, 0.9, 0);
   shipGroup.add(figurehead);
 
-  // 6. Ship Bulwarks & Carved Railings
-  const railGeoX = new THREE.BoxGeometry(17.8, 0.55, 0.24);
-  const railPort = new THREE.Mesh(railGeoX, woodTrim);
-  railPort.position.set(0, 0.3, 4.6);
+  // Catheads & Hanging Anchors
+  [-6.8, 6.8].forEach(z => {
+    const cathead = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.3, 0.3), woodTrim);
+    cathead.position.set(14.5, 1.2, z);
+    shipGroup.add(cathead);
+    const anchor = new THREE.Mesh(new THREE.TorusGeometry(0.65, 0.12, 6, 12, Math.PI), ironMat);
+    anchor.position.set(14.5, 0.3, z);
+    anchor.rotation.y = Math.PI / 2;
+    shipGroup.add(anchor);
+  });
+
+  // Anchor Capstan on Forecastle Deck
+  const capstanBase = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.95, 0.85, 12), woodTrim);
+  capstanBase.position.set(13.2, 1.2, 0);
+  shipGroup.add(capstanBase);
+  [-0.8, 0.8].forEach(rot => {
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.12, 0.12), woodTrim);
+    bar.position.set(13.2, 1.45, 0);
+    bar.rotation.y = rot;
+    shipGroup.add(bar);
+  });
+
+  // 6. Ship Bulwarks & Carved Railings with Gun Ports
+  const railPort = new THREE.Mesh(new THREE.BoxGeometry(34.0, 0.85, 0.35), woodTrim);
+  railPort.position.set(0, 0.5, 8.1);
   railPort.castShadow = true;
   shipGroup.add(railPort);
-  const railStarboard = new THREE.Mesh(railGeoX, woodTrim);
-  railStarboard.position.set(0, 0.3, -4.6);
+  const railStarboard = new THREE.Mesh(new THREE.BoxGeometry(34.0, 0.85, 0.35), woodTrim);
+  railStarboard.position.set(0, 0.5, -8.1);
   railStarboard.castShadow = true;
   shipGroup.add(railStarboard);
 
-  // 7. Naval Cannons along broadside (2 on Port, 2 on Starboard)
+  // 7. Full Broadside Naval Cannons (4 Port, 4 Starboard)
   const cannonPositions = [
-    [-2.2, 4.1, Math.PI / 2], [2.6, 4.1, Math.PI / 2],
-    [-2.2, -4.1, -Math.PI / 2], [2.6, -4.1, -Math.PI / 2]
+    [-4.5, 7.3, Math.PI / 2], [0.0, 7.3, Math.PI / 2], [4.5, 7.3, Math.PI / 2], [9.0, 7.3, Math.PI / 2],
+    [-4.5, -7.3, -Math.PI / 2], [0.0, -7.3, -Math.PI / 2], [4.5, -7.3, -Math.PI / 2], [9.0, -7.3, -Math.PI / 2]
   ];
   cannonPositions.forEach(([cx, cz, rot]) => {
     const cannonGroup = new THREE.Group();
-    // Carriage
-    const carriage = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.35, 0.45), woodDark);
-    carriage.position.y = 0.18;
+    const carriage = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.55, 0.7), woodDark);
+    carriage.position.y = 0.28;
     cannonGroup.add(carriage);
-    // Barrel
-    const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 1.1, 12), ironMat);
+    const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.28, 1.8, 14), ironMat);
     barrel.rotation.z = Math.PI / 2;
-    barrel.position.set(0.2, 0.32, 0);
+    barrel.position.set(0.35, 0.5, 0);
     cannonGroup.add(barrel);
+    // Pyramid of cannonballs
+    const balls = new THREE.Mesh(new THREE.SphereGeometry(0.14, 8, 6), ironMat);
+    balls.position.set(-0.6, 0.15, 0.3);
+    cannonGroup.add(balls);
+
     cannonGroup.position.set(cx, 0.05, cz);
     cannonGroup.rotation.y = rot;
     shipGroup.add(cannonGroup);
   });
 
-  // 8. Three Towering Masts with Yards, Rigging & Sails
+  // 8. Cargo Gratings on Midship Waist
+  [-2.2, 2.2].forEach(cx => {
+    const grating = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.15, 3.2), woodDark);
+    grating.position.set(cx, 0.05, 0);
+    shipGroup.add(grating);
+  });
+
+  // 9. Three Grand Masts with Crow's Nests, Sails & Standing Rigging
   const mastPositions = [
-    { x: 4.2, h: 9.2, rad: 0.26 },   // Foremast
-    { x: 0.0, h: 11.0, rad: 0.32 },  // Mainmast
-    { x: -4.4, h: 8.4, rad: 0.24 }   // Mizzenmast
+    { x: 8.5, h: 15.5, rad: 0.38 },   // Foremast
+    { x: 0.0, h: 18.2, rad: 0.46 },   // Mainmast
+    { x: -9.0, h: 14.5, rad: 0.36 }   // Mizzenmast
   ];
   mastPositions.forEach(mastInfo => {
-    const mast = new THREE.Mesh(new THREE.CylinderGeometry(mastInfo.rad * 0.75, mastInfo.rad, mastInfo.h, 12), woodTrim);
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(mastInfo.rad * 0.72, mastInfo.rad, mastInfo.h, 14), woodTrim);
     mast.position.set(mastInfo.x, mastInfo.h / 2, 0);
     mast.castShadow = true;
     shipGroup.add(mast);
 
-    // Crow's Nest
-    const crowNest = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.7, 0.65, 12, 1, true), woodDark);
+    // Crow's Nest with railings
+    const crowNest = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 1.05, 0.9, 14, 1, true), woodDark);
     crowNest.position.set(mastInfo.x, mastInfo.h * 0.65, 0);
     shipGroup.add(crowNest);
 
-    // Cross Yards & Furled Sails
-    [-0.5, 0.1].forEach(yOffset => {
-      const yardY = mastInfo.h * (0.55 + yOffset * 0.4);
-      const yardWidth = 4.2 * (1 - yOffset * 0.3);
-      const yard = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, yardWidth, 8), woodTrim);
+    // Cross Yards & Billowing Furled Sails
+    [-0.55, 0.08].forEach(yOffset => {
+      const yardY = mastInfo.h * (0.58 + yOffset * 0.38);
+      const yardWidth = 7.5 * (1 - yOffset * 0.3);
+      const yard = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, yardWidth, 10), woodTrim);
       yard.rotation.x = Math.PI / 2;
       yard.position.set(mastInfo.x, yardY, 0);
       shipGroup.add(yard);
 
-      const furledSail = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, yardWidth * 0.9, 10), sailMat);
+      const furledSail = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, yardWidth * 0.92, 12), sailMat);
       furledSail.rotation.x = Math.PI / 2;
-      furledSail.position.set(mastInfo.x + 0.12, yardY - 0.05, 0);
+      furledSail.position.set(mastInfo.x + 0.18, yardY - 0.08, 0);
       shipGroup.add(furledSail);
+    });
+
+    // Ratlines (Rope Shrouds) to ship sides
+    [-7.8, 7.8].forEach(sideZ => {
+      const shroud = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, mastInfo.h * 0.7, 4), ironMat);
+      shroud.position.set(mastInfo.x, mastInfo.h * 0.35, sideZ / 2);
+      shroud.rotation.x = sideZ > 0 ? 0.38 : -0.38;
+      shipGroup.add(shroud);
     });
   });
 
-  // 9. Black Jolly Roger Pirate Flag on Stern Mast
-  const flagGeo = new THREE.PlaneGeometry(1.6, 1.0, 10, 6);
-  const flagMat = new THREE.MeshStandardMaterial({ color: "#141416", side: THREE.DoubleSide });
+  // 10. Large Jolly Roger Pirate Flag on Mizzenmast
+  const flagGeo = new THREE.PlaneGeometry(2.6, 1.6, 12, 8);
+  const flagMat = new THREE.MeshStandardMaterial({ color: "#111214", side: THREE.DoubleSide });
   const flag = new THREE.Mesh(flagGeo, flagMat);
-  flag.position.set(-4.4, 7.8, 0.85);
+  flag.position.set(-9.0, 12.8, 1.4);
   flag.userData = { isFlag: true };
   shipGroup.add(flag);
 
-  // 10. Warm Hurricane Lanterns with dynamic point lights
+  // 11. Warm Hurricane Lanterns with dynamic point lights
   const lanternSpots = [
-    [0.0, 1.8, 4.3], [0.0, 1.8, -4.3],
-    [5.8, 1.4, 0.0], [-7.2, 1.6, 2.8],
-    [-7.2, 1.6, -2.8], [0.0, 3.2, 0.0]
+    [0.0, 2.4, 7.6], [0.0, 2.4, -7.6],
+    [11.5, 2.0, 0.0], [-13.2, 2.2, 4.5],
+    [-13.2, 2.2, -4.5], [-17.0, 2.5, 0.0],
+    [0.0, 4.2, 0.0]
   ];
   lanternSpots.forEach(([lx, ly, lz]) => {
     const lanternGroup = new THREE.Group();
-    const cage = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.15, 0.35, 8), goldTrim);
+    const cage = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.2, 0.46, 8), goldTrim);
     lanternGroup.add(cage);
-    const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 0.26, 8), new THREE.MeshBasicMaterial({ color: "#ffd478" }));
+    const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.15, 0.36, 8), new THREE.MeshBasicMaterial({ color: "#ffd580" }));
     lanternGroup.add(glass);
 
-    const pLight = new THREE.PointLight("#ffb852", 1.4, 8);
-    pLight.position.y = 0.05;
+    const pLight = new THREE.PointLight("#ffb548", 1.6, 12);
+    pLight.position.y = 0.06;
     lanternGroup.add(pLight);
 
     lanternGroup.position.set(lx, ly, lz);
@@ -793,120 +838,120 @@ function buildDetailedGalleon(shipGroup) {
 
 // Build Specific 3D Interactive Stations
 function buildStationProps(shipGroup, stationMeshes) {
-  const brass = new THREE.MeshStandardMaterial({ color: "#d9ad50", metalness: 0.7, roughness: 0.3 });
+  const brass = new THREE.MeshStandardMaterial({ color: "#d9ad50", metalness: 0.75, roughness: 0.28 });
   const wood = new THREE.MeshStandardMaterial({ color: "#543825", roughness: 0.7 });
-  const iron = new THREE.MeshStandardMaterial({ color: "#222528", metalness: 0.8, roughness: 0.4 });
+  const iron = new THREE.MeshStandardMaterial({ color: "#222528", metalness: 0.82, roughness: 0.4 });
 
-  // 1. Compass Station (Navigation, x=960, y=170 -> 3D: x=6.0, z=-3.5)
+  // 1. Compass Station (Navigation / Poop Deck, x=1780, y=380 -> 3D: x=13.6, z=-5.4)
   const compassGroup = new THREE.Group();
-  const binnacleBase = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.45, 1.0, 12), brass);
+  const binnacleBase = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.6, 1.2, 12), brass);
   compassGroup.add(binnacleBase);
-  const compassGlow = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.08, 16), new THREE.MeshBasicMaterial({ color: "#85e8ff" }));
-  compassGlow.position.y = 0.52;
+  const compassGlow = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.1, 16), new THREE.MeshBasicMaterial({ color: "#85e8ff" }));
+  compassGlow.position.y = 0.65;
   compassGroup.add(compassGlow);
-  const needle = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.04, 0.06), new THREE.MeshBasicMaterial({ color: "#ff4d4d" }));
-  needle.position.y = 0.58;
+  const needle = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.05, 0.08), new THREE.MeshBasicMaterial({ color: "#ff4d4d" }));
+  needle.position.y = 0.72;
   compassGroup.add(needle);
-  compassGroup.position.set(6.0, 0.35, -3.5);
+  compassGroup.position.set(13.6, 0.4, -5.4);
   shipGroup.add(compassGroup);
   stationMeshes.set("compass", { group: compassGroup, rotor: needle });
 
-  // 2. Lantern Refill Station (Main Deck, x=600, y=130 -> 3D: x=0.0, z=-4.1)
+  // 2. Lantern Refill Station (Main Deck Waist, x=1100, y=340 -> 3D: x=0.0, z=-6.2)
   const lanternStation = new THREE.Group();
-  const oilBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.46, 0.9, 12), wood);
+  const oilBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.65, 1.2, 12), wood);
   lanternStation.add(oilBarrel);
-  const pumpHandle = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.4, 0.08), brass);
-  pumpHandle.position.set(0, 0.65, 0);
+  const pumpHandle = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.55, 0.12), brass);
+  pumpHandle.position.set(0, 0.85, 0);
   lanternStation.add(pumpHandle);
-  lanternStation.position.set(0.0, 0.3, -4.1);
+  lanternStation.position.set(0.0, 0.3, -6.2);
   shipGroup.add(lanternStation);
   stationMeshes.set("lantern", { group: lanternStation, rotor: pumpHandle });
 
-  // 3. Logbook Station (Captain's Cabin, x=220, y=180 -> 3D: x=-6.3, z=-3.3)
+  // 3. Logbook Station (Captain's Great Cabin, x=420, y=440 -> 3D: x=-13.6, z=-4.2)
   const logbookStation = new THREE.Group();
-  const desk = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.75, 0.9), wood);
+  const desk = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.85, 1.1), wood);
   logbookStation.add(desk);
-  const book = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.08, 0.4), new THREE.MeshStandardMaterial({ color: "#8a362a", roughness: 0.6 }));
-  book.position.set(0, 0.42, 0);
+  const book = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.1, 0.5), new THREE.MeshStandardMaterial({ color: "#8a362a", roughness: 0.6 }));
+  book.position.set(0, 0.48, 0);
   logbookStation.add(book);
-  const inkwell = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 0.12, 8), iron);
-  inkwell.position.set(0.42, 0.44, 0.15);
-  logbookStation.add(inkwell);
-  logbookStation.position.set(-6.3, 0.3, -3.3);
+  const astrolabe = new THREE.Mesh(new THREE.TorusGeometry(0.18, 0.03, 6, 12), brass);
+  astrolabe.position.set(0.55, 0.55, 0.2);
+  logbookStation.add(astrolabe);
+  logbookStation.position.set(-13.6, 0.4, -4.2);
   shipGroup.add(logbookStation);
-  stationMeshes.set("logbook", { group: logbookStation, rotor: book });
+  stationMeshes.set("logbook", { group: logbookStation, rotor: astrolabe });
 
-  // 4. Cannon Deck Station (x=980, y=500 -> 3D: x=6.3, z=2.0)
+  // 4. Cannon Deck Station (Starboard Ordnance, x=1750, y=920 -> 3D: x=13.0, z=5.4)
   const cannonStation = new THREE.Group();
-  const cannonBase = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.5, 0.6), wood);
+  const cannonBase = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.65, 0.8), wood);
   cannonStation.add(cannonBase);
-  const heavyGun = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.28, 1.4, 12), iron);
+  const heavyGun = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.35, 1.8, 14), iron);
   heavyGun.rotation.z = Math.PI / 2;
-  heavyGun.position.set(0, 0.45, 0);
+  heavyGun.position.set(0, 0.55, 0);
   cannonStation.add(heavyGun);
-  cannonStation.position.set(6.3, 0.3, 2.0);
+  cannonStation.position.set(13.0, 0.4, 5.4);
   shipGroup.add(cannonStation);
   stationMeshes.set("cannon", { group: cannonStation, rotor: heavyGun });
 
-  // 5. Bilge Pump Station (Engine & Bilge, x=600, y=620 -> 3D: x=0.0, z=4.0)
+  // 5. Bilge Pump Station (Engine & Bilge, x=1100, y=960 -> 3D: x=0.0, z=6.2)
   const bilgeStation = new THREE.Group();
-  const boiler = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 1.2, 12), iron);
+  const boiler = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 0.75, 1.5, 14), iron);
   bilgeStation.add(boiler);
-  const lever = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.65, 0.08), brass);
-  lever.position.set(0.45, 0.4, 0);
+  const lever = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.85, 0.1), brass);
+  lever.position.set(0.6, 0.5, 0);
   bilgeStation.add(lever);
-  bilgeStation.position.set(0.0, 0.35, 4.0);
+  bilgeStation.position.set(0.0, 0.4, 6.2);
   shipGroup.add(bilgeStation);
   stationMeshes.set("bilge", { group: bilgeStation, rotor: lever });
 
-  // 6. Relic Crate Station (Cargo Hold, x=240, y=500 -> 3D: x=-6.0, z=2.0)
+  // 6. Relic Crate Station (Cargo Hold, x=440, y=880 -> 3D: x=-13.2, z=4.6)
   const crateStation = new THREE.Group();
-  const chest = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.65, 0.7), wood);
+  const chest = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.85, 0.9), wood);
   crateStation.add(chest);
-  const relicCrystal = new THREE.Mesh(new THREE.OctahedronGeometry(0.22), new THREE.MeshBasicMaterial({ color: "#a878ff" }));
-  relicCrystal.position.set(0, 0.5, 0);
+  const relicCrystal = new THREE.Mesh(new THREE.OctahedronGeometry(0.32), new THREE.MeshBasicMaterial({ color: "#b366ff" }));
+  relicCrystal.position.set(0, 0.65, 0);
   crateStation.add(relicCrystal);
-  crateStation.position.set(-6.0, 0.3, 2.0);
+  crateStation.position.set(-13.2, 0.4, 4.6);
   shipGroup.add(crateStation);
   stationMeshes.set("cargo", { group: crateStation, rotor: relicCrystal });
 
-  // Ship's Belfry (Emergency Bell on Quarterdeck, x=-4.0, z=0.0)
+  // Ship's Belfry (Emergency Bell on Forecastle Deck, x=1650, y=650 -> 3D: x=11.0, z=0.0)
   const belfryGroup = new THREE.Group();
-  const postL = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.6, 0.14), wood);
-  postL.position.set(-0.35, 0.8, 0);
+  const postL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 2.0, 0.18), wood);
+  postL.position.set(-0.45, 1.0, 0);
   belfryGroup.add(postL);
-  const postR = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.6, 0.14), wood);
-  postR.position.set(0.35, 0.8, 0);
+  const postR = new THREE.Mesh(new THREE.BoxGeometry(0.18, 2.0, 0.18), wood);
+  postR.position.set(0.45, 1.0, 0);
   belfryGroup.add(postR);
-  const arch = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.18, 0.22), wood);
-  arch.position.set(0, 1.55, 0);
+  const arch = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.22, 0.25), wood);
+  arch.position.set(0, 1.95, 0);
   belfryGroup.add(arch);
-  const bell = new THREE.Mesh(new THREE.ConeGeometry(0.26, 0.38, 12), brass);
-  bell.position.set(0, 1.3, 0);
+  const bell = new THREE.Mesh(new THREE.ConeGeometry(0.34, 0.5, 12), brass);
+  bell.position.set(0, 1.65, 0);
   belfryGroup.add(bell);
-  belfryGroup.position.set(-3.8, 0.2, 0);
+  belfryGroup.position.set(11.0, 0.35, 0);
   shipGroup.add(belfryGroup);
   stationMeshes.set("bell", { group: belfryGroup, rotor: bell });
 
-  // Captain's Steering Wheel / Helm on Quarterdeck (x=-5.8, z=0.0)
+  // Grand Captain's Wheel / Helm on Quarterdeck (x=520, y=650 -> 3D: x=-11.6, z=0.0)
   const helmGroup = new THREE.Group();
-  const helmStand = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.24, 1.0, 10), wood);
-  helmStand.position.y = 0.5;
+  const helmStand = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.32, 1.2, 12), wood);
+  helmStand.position.y = 0.6;
   helmGroup.add(helmStand);
-  const wheelHub = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.15, 12), brass);
+  const wheelHub = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.2, 14), brass);
   wheelHub.rotation.x = Math.PI / 2;
-  wheelHub.position.set(0, 0.9, 0.1);
-  const wheelRim = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.05, 8, 20), wood);
-  wheelRim.position.set(0, 0.9, 0.1);
+  wheelHub.position.set(0, 1.15, 0.15);
+  const wheelRim = new THREE.Mesh(new THREE.TorusGeometry(0.65, 0.06, 8, 24), wood);
+  wheelRim.position.set(0, 1.15, 0.15);
   wheelHub.add(wheelRim);
   helmGroup.add(wheelHub);
-  helmGroup.position.set(-5.8, 0.25, 0);
+  helmGroup.position.set(-11.6, 0.3, 0);
   shipGroup.add(helmGroup);
   stationMeshes.set("helm", { group: helmGroup, rotor: wheelHub });
 }
 
 // ==========================================
-// 5. DETAILED PIRATE CHARACTER BUILDER
+// 4. DETAILED PIRATE CHARACTER BUILDER
 // ==========================================
 function buildPirateCharacter(player) {
   const pirateGroup = new THREE.Group();
@@ -920,126 +965,141 @@ function buildPirateCharacter(player) {
     walkPhase: Math.random() * Math.PI * 2
   };
 
-  const skinMat = new THREE.MeshStandardMaterial({ color: "#cda07b", roughness: 0.75 });
+  const skinMat = new THREE.MeshStandardMaterial({ color: "#cba07c", roughness: 0.75 });
   const coatMat = new THREE.MeshStandardMaterial({ color: player.color || "#8c4a43", roughness: 0.65 });
   const darkLeather = new THREE.MeshStandardMaterial({ color: "#221915", roughness: 0.7 });
-  const goldAccents = new THREE.MeshStandardMaterial({ color: "#dfb256", metalness: 0.7, roughness: 0.3 });
-  const ghostMat = new THREE.MeshStandardMaterial({ color: "#6fe0dd", transparent: true, opacity: 0.45, emissive: "#2e8886", emissiveIntensity: 0.6 });
+  const goldAccents = new THREE.MeshStandardMaterial({ color: "#dfb256", metalness: 0.72, roughness: 0.28 });
+  const cutlassSteel = new THREE.MeshStandardMaterial({ color: "#cad5db", metalness: 0.88, roughness: 0.2 });
 
   // Shadow circle on deck
-  const shadowGeo = new THREE.CircleGeometry(0.45, 16);
-  const shadowMat = new THREE.MeshBasicMaterial({ color: "#060a0d", transparent: true, opacity: 0.5 });
+  const shadowGeo = new THREE.CircleGeometry(0.55, 16);
+  const shadowMat = new THREE.MeshBasicMaterial({ color: "#05090c", transparent: true, opacity: 0.52 });
   const shadow = new THREE.Mesh(shadowGeo, shadowMat);
   shadow.rotation.x = -Math.PI / 2;
   shadow.position.y = 0.02;
   pirateGroup.add(shadow);
 
-  // Torso / Pirate Coat
-  const coatGeo = new THREE.CylinderGeometry(0.24, 0.32, 0.68, 10);
+  // Torso / Pirate Coat with sculpted chest & lapels
+  const coatGeo = new THREE.CylinderGeometry(0.28, 0.38, 0.78, 12);
   const coat = new THREE.Mesh(coatGeo, coatMat);
-  coat.position.y = 0.62;
+  coat.position.y = 0.72;
   coat.castShadow = true;
   pirateGroup.add(coat);
 
-  // Leather Belt & Skull Buckle
-  const belt = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.1, 10), darkLeather);
-  belt.position.y = 0.46;
+  // Leather Belt with Brass Skull Buckle
+  const belt = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.12, 12), darkLeather);
+  belt.position.y = 0.54;
   pirateGroup.add(belt);
-  const buckle = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 0.05), goldAccents);
-  buckle.position.set(0, 0.46, 0.3);
+  const buckle = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.14, 0.06), goldAccents);
+  buckle.position.set(0, 0.54, 0.36);
   pirateGroup.add(buckle);
 
-  // Coat tails
-  const coatTails = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.35, 0.12), coatMat);
-  coatTails.position.set(0, 0.28, -0.22);
-  coatTails.rotation.x = 0.15;
+  // Pirate Cutlass Sword in Scabbard at Left Hip
+  const scabbard = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.75, 0.12), darkLeather);
+  scabbard.position.set(-0.42, 0.45, 0.05);
+  scabbard.rotation.z = -0.32;
+  pirateGroup.add(scabbard);
+  const cutlassGuard = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.025, 4, 8), goldAccents);
+  cutlassGuard.position.set(-0.48, 0.78, 0.05);
+  pirateGroup.add(cutlassGuard);
+
+  // Brass Flintlock Pistol Tucked in Waist Sash
+  const pistolBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.05, 0.38, 8), goldAccents);
+  pistolBarrel.rotation.z = Math.PI / 3;
+  pistolBarrel.position.set(0.22, 0.58, 0.34);
+  pirateGroup.add(pistolBarrel);
+
+  // Coat tails (flow behind as pirate strides)
+  const coatTails = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.42, 0.14), coatMat);
+  coatTails.position.set(0, 0.32, -0.26);
+  coatTails.rotation.x = 0.16;
   pirateGroup.add(coatTails);
 
-  // Head
-  const headGeo = new THREE.SphereGeometry(0.22, 14, 12);
+  // Head with Weathered Face & Eyepatch
+  const headGeo = new THREE.SphereGeometry(0.25, 16, 14);
   const head = new THREE.Mesh(headGeo, skinMat);
-  head.position.y = 1.14;
+  head.position.y = 1.32;
   head.castShadow = true;
   pirateGroup.add(head);
 
   // Eyepatch on left eye
-  const patch = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.06, 0.04), darkLeather);
-  patch.position.set(-0.08, 1.16, 0.21);
+  const patch = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.07, 0.05), darkLeather);
+  patch.position.set(-0.09, 1.35, 0.24);
   pirateGroup.add(patch);
 
-  // Arms
-  const armGeo = new THREE.CapsuleGeometry(0.08, 0.38, 4, 8);
+  // Arms with Coat Sleeves
+  const armGeo = new THREE.CapsuleGeometry(0.09, 0.45, 4, 8);
   const armL = new THREE.Mesh(armGeo, coatMat);
-  armL.position.set(-0.35, 0.68, 0);
+  armL.position.set(-0.42, 0.78, 0);
   armL.castShadow = true;
   pirateGroup.add(armL);
   const armR = new THREE.Mesh(armGeo, coatMat);
-  armR.position.set(0.35, 0.68, 0);
+  armR.position.set(0.42, 0.78, 0);
   armR.castShadow = true;
   pirateGroup.add(armR);
 
-  // Legs / Leather Boots
-  const bootGeo = new THREE.CapsuleGeometry(0.1, 0.32, 4, 8);
+  // Legs with Leather Pirate Boots
+  const bootGeo = new THREE.CapsuleGeometry(0.12, 0.38, 4, 8);
   const legL = new THREE.Mesh(bootGeo, darkLeather);
-  legL.position.set(-0.16, 0.22, 0);
+  legL.position.set(-0.18, 0.25, 0);
   pirateGroup.add(legL);
   const legR = new THREE.Mesh(bootGeo, darkLeather);
-  legR.position.set(0.16, 0.22, 0);
+  legR.position.set(0.18, 0.25, 0);
   pirateGroup.add(legR);
 
-  // Distinct Pirate Hats by Role
+  // Distinct Hats by Character
   const hatType = player.character || "Captain";
   if (hatType === "Captain") {
-    // Tricorn hat with gold trim and feather
-    const hatBase = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.26, 0.14, 10), darkLeather);
-    hatBase.position.y = 1.34;
+    // Grand Captain's Tricorn Hat with Gold Trim & Ostrich Feather
+    const hatBase = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.3, 0.16, 12), darkLeather);
+    hatBase.position.y = 1.54;
     pirateGroup.add(hatBase);
-    const brim = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.05, 0.52), darkLeather);
-    brim.position.y = 1.32;
+    const brim = new THREE.Mesh(new THREE.BoxGeometry(0.98, 0.06, 0.62), darkLeather);
+    brim.position.y = 1.52;
     pirateGroup.add(brim);
-    const feather = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.42, 6), new THREE.MeshBasicMaterial({ color: "#ffdb58" }));
-    feather.position.set(0.24, 1.54, 0);
-    feather.rotation.z = -0.35;
+    const feather = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.52, 6), new THREE.MeshBasicMaterial({ color: "#ffd558" }));
+    feather.position.set(0.28, 1.78, 0);
+    feather.rotation.z = -0.38;
     pirateGroup.add(feather);
   } else if (hatType === "Deckhand") {
-    // Red tied bandana
-    const bandana = new THREE.Mesh(new THREE.SphereGeometry(0.24, 12, 10), new THREE.MeshStandardMaterial({ color: "#a83232" }));
-    bandana.position.y = 1.2;
+    // Red bandana tied with knot
+    const bandana = new THREE.Mesh(new THREE.SphereGeometry(0.27, 14, 12), new THREE.MeshStandardMaterial({ color: "#a83232" }));
+    bandana.position.y = 1.38;
     pirateGroup.add(bandana);
   } else if (hatType === "Surgeon") {
     // Linen headwrap with red cross
-    const wrap = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.18, 12), new THREE.MeshStandardMaterial({ color: "#f0ede6" }));
-    wrap.position.y = 1.24;
+    const wrap = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.27, 0.2, 12), new THREE.MeshStandardMaterial({ color: "#f0ede6" }));
+    wrap.position.y = 1.42;
     pirateGroup.add(wrap);
-    const cross = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.04, 0.03), new THREE.MeshBasicMaterial({ color: "#bb2222" }));
-    cross.position.set(0, 1.24, 0.24);
+    const cross = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.04), new THREE.MeshBasicMaterial({ color: "#bb2222" }));
+    cross.position.set(0, 1.42, 0.27);
     pirateGroup.add(cross);
   } else if (hatType === "Occultist") {
     // Dark cowl hood & glowing talisman
-    const cowl = new THREE.Mesh(new THREE.ConeGeometry(0.36, 0.5, 10), new THREE.MeshStandardMaterial({ color: "#362744" }));
-    cowl.position.y = 1.35;
+    const cowl = new THREE.Mesh(new THREE.ConeGeometry(0.42, 0.6, 12), new THREE.MeshStandardMaterial({ color: "#362744" }));
+    cowl.position.y = 1.55;
     pirateGroup.add(cowl);
-    const charm = new THREE.Mesh(new THREE.OctahedronGeometry(0.08), new THREE.MeshBasicMaterial({ color: "#b366ff" }));
-    charm.position.set(0, 0.55, 0.28);
+    const charm = new THREE.Mesh(new THREE.OctahedronGeometry(0.1), new THREE.MeshBasicMaterial({ color: "#b366ff" }));
+    charm.position.set(0, 0.62, 0.35);
     pirateGroup.add(charm);
   } else if (hatType === "Cursed One") {
-    // Ghostly barnacles / spectral horns
-    [-0.14, 0.14].forEach(hx => {
-      const horn = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.28, 6), new THREE.MeshBasicMaterial({ color: "#54dfd5" }));
-      horn.position.set(hx, 1.4, 0);
-      horn.rotation.z = hx < 0 ? 0.3 : -0.3;
+    // Ghostly spectral horns
+    [-0.16, 0.16].forEach(hx => {
+      const horn = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.35, 6), new THREE.MeshBasicMaterial({ color: "#54dfd5" }));
+      horn.position.set(hx, 1.62, 0);
+      horn.rotation.z = hx < 0 ? 0.32 : -0.32;
       pirateGroup.add(horn);
     });
   } else {
     // Classic Cocked Pirate Hat
-    const hat = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.32, 0.16, 10), darkLeather);
-    hat.position.y = 1.32;
+    const hat = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.36, 0.18, 12), darkLeather);
+    hat.position.y = 1.52;
     pirateGroup.add(hat);
   }
 
-  // Floating Nameplate Sprite
+  // Floating Crisp Nameplate Sprite
   const nameplate = createNameplate(player.name, player.id === myId);
-  nameplate.position.y = 1.82;
+  nameplate.position.y = 2.05;
   pirateGroup.add(nameplate);
 
   pirateGroup.userData.armL = armL;
@@ -1054,7 +1114,7 @@ function buildPirateCharacter(player) {
   return pirateGroup;
 }
 
-// High-Res Canvas 2D Text Sprite for Floating Nameplate
+// Canvas Text Sprite for Overhead Nameplate
 function createNameplate(text, isMe) {
   const canvas = document.createElement("canvas");
   canvas.width = 384;
@@ -1062,8 +1122,7 @@ function createNameplate(text, isMe) {
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, 384, 96);
 
-  // Background badge
-  ctx.fillStyle = isMe ? "rgba(232, 190, 103, 0.85)" : "rgba(16, 12, 9, 0.78)";
+  ctx.fillStyle = isMe ? "rgba(232, 190, 103, 0.9)" : "rgba(16, 12, 9, 0.82)";
   ctx.strokeStyle = isMe ? "#fff" : "#c29c54";
   ctx.lineWidth = 3;
   ctx.beginPath();
@@ -1088,18 +1147,17 @@ function createNameplate(text, isMe) {
 // 3D Fallen Pirate Body Marker
 function buildFallenBody() {
   const group = new THREE.Group();
-  const bones = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.15, 0.35), new THREE.MeshStandardMaterial({ color: "#dfd8c7", roughness: 0.8 }));
+  const bones = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.18, 0.42), new THREE.MeshStandardMaterial({ color: "#dfd8c7", roughness: 0.8 }));
   group.add(bones);
-  const coatRemains = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.12, 0.5), new THREE.MeshStandardMaterial({ color: "#8a292e" }));
+  const coatRemains = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.14, 0.6), new THREE.MeshStandardMaterial({ color: "#8a292e" }));
   coatRemains.position.y = 0.08;
   group.add(coatRemains);
-  const pirateHat = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.18, 8), new THREE.MeshStandardMaterial({ color: "#1e1713" }));
-  pirateHat.position.set(0.38, 0.15, 0);
+  const pirateHat = new THREE.Mesh(new THREE.ConeGeometry(0.3, 0.22, 8), new THREE.MeshStandardMaterial({ color: "#1e1713" }));
+  pirateHat.position.set(0.44, 0.18, 0);
   pirateHat.rotation.z = -0.4;
   group.add(pirateHat);
 
-  // Runic blood pool
-  const pool = new THREE.Mesh(new THREE.CircleGeometry(0.55, 16), new THREE.MeshBasicMaterial({ color: "#541215", transparent: true, opacity: 0.7 }));
+  const pool = new THREE.Mesh(new THREE.CircleGeometry(0.68, 16), new THREE.MeshBasicMaterial({ color: "#541215", transparent: true, opacity: 0.72 }));
   pool.rotation.x = -Math.PI / 2;
   pool.position.y = 0.01;
   group.add(pool);
@@ -1108,7 +1166,7 @@ function buildFallenBody() {
 }
 
 // ==========================================
-// 6. MINIMAP RENDERER
+// 5. MINIMAP RENDERER
 // ==========================================
 function renderMinimap() {
   const canvas = $("minimapCanvas");
@@ -1117,26 +1175,26 @@ function renderMinimap() {
   const w = canvas.width, h = canvas.height;
   ctx.clearRect(0, 0, w, h);
 
-  // Ocean background
-  ctx.fillStyle = "#0c181f";
+  ctx.fillStyle = "#0a131a";
   ctx.fillRect(0, 0, w, h);
 
-  // Ship hull outline on radar
   ctx.save();
-  ctx.scale(w / 1200, h / 760);
+  ctx.scale(w / 2200, h / 1300);
+
+  // Galleon hull outline
   ctx.beginPath();
-  ctx.ellipse(600, 380, 480, 260, 0, 0, Math.PI * 2);
-  ctx.fillStyle = "#1e2e34";
+  ctx.ellipse(1100, 650, 920, 440, 0, 0, Math.PI * 2);
+  ctx.fillStyle = "#1b2a30";
   ctx.fill();
   ctx.strokeStyle = "#5a8894";
-  ctx.lineWidth = 14;
+  ctx.lineWidth = 20;
   ctx.stroke();
 
-  // Task icons on radar
+  // Tasks on radar
   state.tasks.forEach(t => {
     ctx.fillStyle = t.done ? "#52a362" : "#f5c542";
     ctx.beginPath();
-    ctx.arc(t.x, t.y, 22, 0, Math.PI * 2);
+    ctx.arc(t.x, t.y, 36, 0, Math.PI * 2);
     ctx.fill();
   });
 
@@ -1145,20 +1203,19 @@ function renderMinimap() {
     if (!p.alive && !p.connected) return;
     ctx.fillStyle = p.id === myId ? "#ffffff" : p.color;
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.id === myId ? 28 : 20, 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, p.id === myId ? 42 : 30, 0, Math.PI * 2);
     ctx.fill();
     ctx.strokeStyle = "#000";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 6;
     ctx.stroke();
 
-    // Facing indicator
     if (p.id === myId) {
       const angle = (p.direction || 0);
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
-      ctx.lineTo(p.x + Math.sin(angle) * 45, p.y - Math.cos(angle) * 45);
+      ctx.lineTo(p.x + Math.sin(angle) * 70, p.y + Math.cos(angle) * 70);
       ctx.strokeStyle = "#fff";
-      ctx.lineWidth = 6;
+      ctx.lineWidth = 8;
       ctx.stroke();
     }
   });
@@ -1167,11 +1224,11 @@ function renderMinimap() {
 }
 
 // ==========================================
-// 7. INPUT & 3RD PERSON CAMERA CONTROLS
+// 6. INPUT & 3RD PERSON CAMERA CONTROLS
 // ==========================================
 const world3D = init3DWorld();
 
-// Mouse Drag for 3D Camera Orbit
+// Mouse Drag for Camera Orbit
 window.addEventListener("mousedown", e => {
   if (e.target.id === "gameCanvas" && (e.button === 0 || e.button === 2)) {
     world3D.isDragging = true;
@@ -1195,7 +1252,7 @@ window.addEventListener("mousemove", e => {
 });
 window.addEventListener("mouseup", () => { world3D.isDragging = false; });
 window.addEventListener("wheel", e => {
-  world3D.cameraDist = Math.max(3.8, Math.min(14.0, world3D.cameraDist + e.deltaY * 0.008));
+  world3D.cameraDist = Math.max(4.5, Math.min(18.0, world3D.cameraDist + e.deltaY * 0.008));
 });
 
 // Keyboard Controls
@@ -1291,7 +1348,7 @@ $("btnLeaveVoyage").onclick = () => {
 };
 
 // ==========================================
-// 8. INTERACTIVE ACTIONS (Tasks, Bell, Sabotage)
+// 7. INTERACTIVE ACTIONS (Tasks, Bell, Sabotage)
 // ==========================================
 function tryInteract() {
   if (!state || state.phase !== "playing") return;
@@ -1313,10 +1370,9 @@ function tryInteract() {
     return;
   }
 
-  // Fallback to nearest task
   const unfinished = state.tasks.filter(t => !t.done);
   const nearest = unfinished.sort((a,b) => Math.hypot(a.x - me.x, a.y - me.y) - Math.hypot(b.x - me.x, b.y - me.y))[0];
-  if (nearest && Math.hypot(nearest.x - me.x, nearest.y - me.y) < 85) {
+  if (nearest && Math.hypot(nearest.x - me.x, nearest.y - me.y) < 110) {
     socket.emit("interact", nearest.id);
     audio.playTaskComplete();
   } else {
@@ -1329,7 +1385,7 @@ function tryReport() {
   const me = state.players.find(p => p.id === myId);
   if (!me || !me.alive) return;
 
-  const nearbyBody = state.bodies?.find(b => Math.hypot(b.x - me.x, b.y - me.y) < 95);
+  const nearbyBody = state.bodies?.find(b => Math.hypot(b.x - me.x, b.y - me.y) < 120);
   socket.emit("report", nearbyBody?.id || null);
   audio.playBell();
 }
@@ -1363,7 +1419,7 @@ $("gameCanvas").addEventListener("click", e => {
 });
 
 // ==========================================
-// 9. CLIENT MOVEMENT CALCULATION (3D CAMERA-RELATIVE)
+// 8. 3D CAMERA-RELATIVE MOVEMENT (Fixed Math)
 // ==========================================
 function updateMovement() {
   if (!state || state.phase !== "playing") return;
@@ -1378,23 +1434,25 @@ function updateMovement() {
 
   if (forward === 0 && strafe === 0) return;
 
-  // Calculate movement vector relative to 3D Camera Yaw
+  // Camera-relative forward & strafe vectors
   const camYaw = world3D.cameraYaw;
   const sin = Math.sin(camYaw);
   const cos = Math.cos(camYaw);
 
-  // In 3D: forward points along camera direction
-  const moveX = strafe * cos + forward * sin;
-  const moveZ = -strafe * sin + forward * cos;
+  // In 3D: forward points along camera view (+sin X, +cos Z)
+  const moveX = forward * sin + strafe * cos;
+  const moveZ = forward * cos - strafe * sin;
 
-  // Convert to 2D map space (dx, dy)
-  const dx = moveX;
-  const dy = moveZ;
+  const len = Math.hypot(moveX, moveZ);
+  if (len < 0.001) return;
 
-  // Compute character facing angle
-  const playerFacing = Math.atan2(dx, -dy);
+  const dx = (moveX / len) * (isRunning ? 220 : 130);
+  const dy = (moveZ / len) * (isRunning ? 220 : 130);
 
-  if (Date.now() - lastMoveSent > 35) {
+  // Player orientation faces movement direction
+  const playerFacing = Math.atan2(moveX, moveZ);
+
+  if (Date.now() - lastMoveSent > 30) {
     lastMoveSent = Date.now();
     socket.emit("move", { dx, dy, direction: playerFacing, isRunning });
     audio.playFootstep(isRunning);
@@ -1402,13 +1460,12 @@ function updateMovement() {
 }
 
 // ==========================================
-// 10. MAIN RENDER & ANIMATION LOOP
+// 9. MAIN RENDER & ANIMATION LOOP
 // ==========================================
 function renderLoop(time = 0) {
   requestAnimationFrame(renderLoop);
   updateMovement();
 
-  // Resize canvas to match display size
   const canvas = $("gameCanvas");
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -1420,18 +1477,18 @@ function renderLoop(time = 0) {
 
   // 1. Ocean Waves Vertex Animation
   const oceanPos = world3D.oceanGeo.attributes.position;
-  const t = time * 0.0018;
+  const t = time * 0.0016;
   for (let i = 0; i < oceanPos.count; i++) {
     const ox = oceanPos.getX(i);
     const oy = oceanPos.getY(i);
-    const wave = Math.sin(ox * 0.18 + t * 2.2) * 0.28 + Math.cos(oy * 0.22 + t * 1.8) * 0.24;
+    const wave = Math.sin(ox * 0.12 + t * 2.0) * 0.35 + Math.cos(oy * 0.15 + t * 1.6) * 0.3;
     oceanPos.setZ(i, wave);
   }
   oceanPos.needsUpdate = true;
 
   // 2. Gentle Ship Rocking (Pitch & Roll)
-  world3D.shipGroup.rotation.z = Math.sin(t * 1.1) * 0.024;
-  world3D.shipGroup.rotation.x = Math.cos(t * 0.85) * 0.018;
+  world3D.shipGroup.rotation.z = Math.sin(t * 1.0) * 0.02;
+  world3D.shipGroup.rotation.x = Math.cos(t * 0.8) * 0.015;
 
   // 3. Stations Animation (Rotating needles, glowing relics)
   world3D.stationMeshes.forEach(station => {
@@ -1440,28 +1497,27 @@ function renderLoop(time = 0) {
 
   // 4. Update Players (Positions, Skeletal Striding, Orientation)
   world3D.players.forEach(mesh => {
-    mesh.position.lerp(mesh.userData.targetPos, 0.28);
-    // Smooth rotation lerp
+    mesh.position.lerp(mesh.userData.targetPos, 0.32);
+
     let diff = mesh.userData.targetRot - mesh.rotation.y;
     while (diff < -Math.PI) diff += Math.PI * 2;
     while (diff > Math.PI) diff -= Math.PI * 2;
-    mesh.rotation.y += diff * 0.32;
+    mesh.rotation.y += diff * 0.35;
 
-    // Walking animation cycle
-    const isMoving = mesh.position.distanceTo(mesh.userData.targetPos) > 0.02;
-    const walkSpeed = isRunning ? 0.016 : 0.011;
+    const isMoving = mesh.position.distanceTo(mesh.userData.targetPos) > 0.025;
+    const walkSpeed = isRunning ? 0.018 : 0.012;
     const stride = isMoving ? Math.sin(time * walkSpeed + mesh.userData.walkPhase) : 0;
 
     if (mesh.userData.armL && mesh.userData.armR) {
-      mesh.userData.armL.rotation.x = stride * 0.65;
-      mesh.userData.armR.rotation.x = -stride * 0.65;
+      mesh.userData.armL.rotation.x = stride * 0.7;
+      mesh.userData.armR.rotation.x = -stride * 0.7;
     }
     if (mesh.userData.legL && mesh.userData.legR) {
-      mesh.userData.legL.rotation.x = -stride * 0.55;
-      mesh.userData.legR.rotation.x = stride * 0.55;
+      mesh.userData.legL.rotation.x = -stride * 0.6;
+      mesh.userData.legR.rotation.x = stride * 0.6;
     }
     if (mesh.userData.coatTails) {
-      mesh.userData.coatTails.rotation.x = 0.15 + (isMoving ? Math.abs(stride) * 0.22 : 0);
+      mesh.userData.coatTails.rotation.x = 0.16 + (isMoving ? Math.abs(stride) * 0.25 : 0);
     }
   });
 
@@ -1469,22 +1525,21 @@ function renderLoop(time = 0) {
   const me = state?.players.find(p => p.id === myId);
   if (me) {
     const worldPos = mapToWorld(me.x, me.y);
-    world3D.cameraTarget.lerp(new THREE.Vector3(worldPos.x, 0.9, worldPos.z), 0.14);
+    world3D.cameraTarget.lerp(new THREE.Vector3(worldPos.x, 1.0, worldPos.z), 0.16);
 
     if (world3D.cameraMode === "third") {
       const cy = Math.sin(world3D.cameraPitch) * world3D.cameraDist;
       const hDist = Math.cos(world3D.cameraPitch) * world3D.cameraDist;
       const cx = world3D.cameraTarget.x - Math.sin(world3D.cameraYaw) * hDist;
       const cz = world3D.cameraTarget.z - Math.cos(world3D.cameraYaw) * hDist;
-      world3D.camera.position.lerp(new THREE.Vector3(cx, Math.max(0.6, world3D.cameraTarget.y + cy), cz), 0.16);
-      world3D.camera.lookAt(world3D.cameraTarget.x, world3D.cameraTarget.y + 0.3, world3D.cameraTarget.z);
+      world3D.camera.position.lerp(new THREE.Vector3(cx, Math.max(0.7, world3D.cameraTarget.y + cy), cz), 0.18);
+      world3D.camera.lookAt(world3D.cameraTarget.x, world3D.cameraTarget.y + 0.35, world3D.cameraTarget.z);
     } else {
       // Tactical top-down view
-      world3D.camera.position.lerp(new THREE.Vector3(world3D.cameraTarget.x, 18, world3D.cameraTarget.z + 0.01), 0.12);
+      world3D.camera.position.lerp(new THREE.Vector3(world3D.cameraTarget.x, 24, world3D.cameraTarget.z + 0.01), 0.12);
       world3D.camera.lookAt(world3D.cameraTarget);
     }
 
-    // Check distance to interactive stations for floating prompt
     updateInteractionPrompts(me);
   }
 
@@ -1500,8 +1555,7 @@ function updateInteractionPrompts(me) {
     return;
   }
 
-  // Check dead bodies
-  activePromptBody = state.bodies?.find(b => Math.hypot(b.x - me.x, b.y - me.y) < 85);
+  activePromptBody = state.bodies?.find(b => Math.hypot(b.x - me.x, b.y - me.y) < 120);
   if (activePromptBody) {
     $("promptKeyBadge").textContent = "SPACE";
     $("promptActionText").textContent = "REPORT FALLEN CREWMATE";
@@ -1509,7 +1563,6 @@ function updateInteractionPrompts(me) {
     return;
   }
 
-  // Check sabotage repair
   if (state.sabotage) {
     $("promptKeyBadge").textContent = "E";
     $("promptActionText").textContent = "REPAIR CRITICAL SABOTAGE";
@@ -1517,17 +1570,16 @@ function updateInteractionPrompts(me) {
     return;
   }
 
-  // Check ship bell
-  if (Math.hypot(me.x - 360, me.y - 380) < 65) {
+  // Check ship bell at Forecastle (1650, 650)
+  if (Math.hypot(me.x - 1650, me.y - 650) < 95) {
     $("promptKeyBadge").textContent = "SPACE";
     $("promptActionText").textContent = "RING SHIP'S EMERGENCY BELL";
     $("interactPrompt").classList.add("visible");
     return;
   }
 
-  // Check unfinished tasks
   const unfinished = state.tasks.filter(t => !t.done);
-  activePromptTask = unfinished.find(t => Math.hypot(t.x - me.x, t.y - me.y) < 78);
+  activePromptTask = unfinished.find(t => Math.hypot(t.x - me.x, t.y - me.y) < 110);
   if (activePromptTask) {
     $("promptKeyBadge").textContent = "E";
     $("promptActionText").textContent = activePromptTask.name.toUpperCase();
@@ -1540,7 +1592,7 @@ function updateInteractionPrompts(me) {
 }
 
 // ==========================================
-// 11. SOCKET EVENTS & STATE SYNC
+// 10. SOCKET EVENTS & STATE SYNC
 // ==========================================
 socket.on("connect", () => {
   if (roomCode && sessionId) {
@@ -1591,11 +1643,9 @@ socket.on("state", newState => {
   }
 });
 
-// Synchronize 3D Meshes with Server State
 function sync3DScene() {
   if (!state) return;
 
-  // 1. Sync Players
   const currentIds = new Set(state.players.filter(p => p.alive || p.connected).map(p => p.id));
   world3D.players.forEach((mesh, id) => {
     if (!currentIds.has(id)) {
@@ -1618,14 +1668,12 @@ function sync3DScene() {
     mesh.userData.targetPos.set(wPos.x, p.alive ? 0 : 0.05, wPos.z);
     mesh.userData.targetRot = (p.direction || 0);
 
-    // Ghost state if eliminated
     if (!p.alive && !mesh.userData.isGhost) {
       mesh.userData.isGhost = true;
-      mesh.position.y = 0.45;
+      mesh.position.y = 0.55;
     }
   });
 
-  // 2. Sync Fallen Bodies
   const bodyIds = new Set((state.bodies || []).map(b => b.id));
   world3D.bodies.forEach((mesh, id) => {
     if (!bodyIds.has(id)) {
@@ -1644,11 +1692,9 @@ function sync3DScene() {
     }
   });
 
-  // 3. Sabotage lighting adjustments
-  world3D.ambientLight.intensity = state.sabotage?.type === "lights" ? 0.35 : 1.2;
+  world3D.ambientLight.intensity = state.sabotage?.type === "lights" ? 0.35 : 1.25;
 }
 
-// Update HUD & Tactical Information
 function updateHUD() {
   if (!state) return;
   const me = state.me;
@@ -1665,7 +1711,6 @@ function updateHUD() {
     $("sabotageAlert").style.display = "none";
   }
 
-  // Objectives text
   if (state.phase === "meeting") {
     $("hudObjectiveText").textContent = "The emergency bell has sounded. Attend the meeting!";
   } else if (me?.role === "hollow") {
@@ -1681,7 +1726,6 @@ function updateHUD() {
     $("btnQuickSabotage").classList.add("hidden");
   }
 
-  // Manifest list
   $("manifestPlayers").innerHTML = state.players.map(p => `
     <div class="player-card ${p.id === myId ? 'is-me' : ''}">
       <span class="color-dot" style="background:${p.color}"></span>
@@ -1698,7 +1742,6 @@ function updateHUD() {
   `).join("");
 }
 
-// Render Gathering Lobby
 function renderLobby() {
   const isHost = state.hostId === myId;
   $("btnStartGame").disabled = !isHost;
@@ -1716,10 +1759,14 @@ function renderLobby() {
   `).join("");
 }
 
-// Render Emergency Meeting & Voting
 function renderMeeting() {
   $("meetingOverlay").classList.remove("hidden");
   const living = state.players.filter(p => p.alive && p.connected);
+
+  if (state.meeting?.endsAt) {
+    const remainingSec = Math.max(0, Math.ceil((state.meeting.endsAt - Date.now()) / 1000));
+    $("meetingTimerClock").textContent = `DELIBERATION TIME: ${remainingSec}s`;
+  }
   $("meetingStatusText").textContent = `${state.meeting?.votes || 0} of ${living.length} votes cast.`;
 
   $("meetingCandidatesList").innerHTML = living.map(p => `
@@ -1731,7 +1778,6 @@ function renderMeeting() {
 }
 window.castMeetingVote = id => socket.emit("vote", id);
 
-// Render End Game
 function renderEndGame() {
   $("endOverlay").classList.remove("hidden");
   $("endGameTitle").textContent = state.winner === "crew" ? "THE CREW SURVIVES" : "THE HOLLOW CLAIM THE SHIP";
@@ -1745,15 +1791,18 @@ function renderEndGame() {
   `).join("");
 }
 
-// Voyage clock ticker
+// Meeting clock and voyage ticker
 setInterval(() => {
   if (state?.startedAt && state.phase === "playing") {
     const s = Math.floor((Date.now() - state.startedAt) / 1000);
     $("hudVoyageTimer").textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
   }
+  if (state?.phase === "meeting" && state.meeting?.endsAt) {
+    const remainingSec = Math.max(0, Math.ceil((state.meeting.endsAt - Date.now()) / 1000));
+    $("meetingTimerClock").textContent = `DELIBERATION TIME: ${remainingSec}s`;
+  }
 }, 1000);
 
-// Start 3D Loop
 requestAnimationFrame(renderLoop);
 </script>
 </body>
